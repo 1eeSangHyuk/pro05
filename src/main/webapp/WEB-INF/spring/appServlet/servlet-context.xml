@@ -23,7 +23,7 @@
 	</beans:bean>
 
 	<!-- properties 파일의 내용을 사용하는 Bean 을 정의 -->
-	<beans:bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+	<beans:bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<beans:property name="locations">
 			<beans:list>
 				<beans:value>/WEB-INF/properties/db.properties</beans:value>
@@ -39,10 +39,8 @@
 
 
 	<!-- BasicDataSource : 데이터베이스 접속정보를 관리하는 Bean -->
-	<beans:bean class="org.apache.commons.dbcp2.BasicDataSource"
-		id="basic_data_source">
-		<beans:property name="driverClassName"
-			value="${db.classname}" />
+	<beans:bean class="org.apache.commons.dbcp2.BasicDataSource" id="basic_data_source">
+		<beans:property name="driverClassName" value="${db.classname}" />
 		<beans:property name="url" value="${db.url}" />
 		<beans:property name="username" value="${db.username}" />
 		<beans:property name="password" value="${db.password}" />

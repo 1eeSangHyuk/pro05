@@ -5,7 +5,6 @@ select table_name
   FROM user_tables
 ;
 
-
 CREATE TABLE user_tbl(user_id VARCHAR2(20) PRIMARY KEY not null,   --아이디
                     user_pw VARCHAR2(300) not null,  --비밀번호
                     user_name VARCHAR2(20),  --이름
@@ -15,7 +14,9 @@ CREATE TABLE user_tbl(user_id VARCHAR2(20) PRIMARY KEY not null,   --아이디
 
 insert into user_tbl(user_id, user_pw) values('test01', 'pw01');
 
-select * from user_tbl;
+--select * from user_tbl;
+--update user_tbl set user_name = '테스트01' where user_id = 'test01';
+--select user_name from user_tbl where user_id = 'test01';
                     
 CREATE TABLE notice (noti_idx NUMBER(20) PRIMARY KEY NOT NULL,   --공지사항idx
                      noti_title VARCHAR2(100) NOT NULL,  --제목
@@ -64,6 +65,8 @@ CREATE TABLE review (rev_idx NUMBER(20) PRIMARY KEY NOT NULL,   -- 리뷰 idx
                      constraint review_user_fk foreign key(rev_id) references user_tbl(user_id)
 );
 
+create sequence rev_seq start with 1 INCREMENT by 1 nocycle;
+
 --CREATE TABLE qna (qna_idx VARCHAR2(20) PRIMARY KEY NOT NULL,   --qna_idx        
 --                  qna_title VARCHAR2(100) NOT NULL, --제목
 --                  qna_content VARCHAR2(1000) NOT NULL,  --내용
@@ -75,8 +78,6 @@ CREATE TABLE review (rev_idx NUMBER(20) PRIMARY KEY NOT NULL,   -- 리뷰 idx
 --                  qna_file VARCHAR2(200)
 --); 
 
-                   
 
-commit;
 
 

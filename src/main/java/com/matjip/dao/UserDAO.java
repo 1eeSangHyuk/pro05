@@ -4,6 +4,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.matjip.dto.UserDTO;
+
 @Repository
 public class UserDAO {
 	
@@ -12,7 +14,10 @@ public class UserDAO {
 	
 	public String checkUserIdExist(String user_id) {
 		String user_name = sqlSessionTemplate.selectOne("user.checkUserIdExist", user_id);
-		System.out.println(user_name);
 		return user_name;
+	}
+	
+	public void testInsert(UserDTO userDTO) {
+		sqlSessionTemplate.insert("user.testInsert", userDTO);
 	}
 }

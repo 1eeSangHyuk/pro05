@@ -3,6 +3,15 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee https://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
+	<!-- 
+		  현재 web application 에서 받아들이는 모든 요청에 대해서
+		  appServlet 이라는 이름으로 정의된 Servlet 을 사용한다는 의미     
+	-->
+	<servlet-mapping>
+		<servlet-name>appServlet</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
 	<!-- Bean 을 정의하는 xml 파일 지정하기 -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
@@ -11,8 +20,7 @@
 
 	<!-- Creates the Spring Container shared by all Servlets and Filters -->
 	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener
-		</listener-class>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 
 	<!-- 요청 정보를 분석해서 Controller 를 선택하는 Servlet 지정하기 -->
@@ -31,13 +39,7 @@
 			<max-request-size>524288000</max-request-size>
 			<file-size-threshold>0</file-size-threshold>
 		</multipart-config>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>appServlet</servlet-name>
-		<url-pattern>/</url-pattern>
-	</servlet-mapping>
-
+	</servlet>	
 
 	<!-- Parameter Encoding Filter 설정하기 : 한글처리 -->
 	<filter>
