@@ -1,9 +1,9 @@
-package com.matjip.dto;
+package com.matjip.bean;
 
 import lombok.Data;
 
 @Data
-public class RestaurantDTO {
+public class RestaurantBean {
 	private int rs_idx;
 	private String rs_food_cate;
 	private String rs_name;

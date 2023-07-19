@@ -3,34 +3,44 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="review">
-	<insert id="insertReview" parameterType="com.matjip.dto.ReviewDTO">
+	<!-- 리뷰 등록 -->
+	<insert id="insertReview" parameterType="com.matjip.bean.ReviewBean">
 		<![CDATA[
-			insert into review values(rev_seq.nextval, #{rs_idx}, #{rev_title}, #{rev_score}, #{rev_id}, #{rev_file}, #{rev_content}, default);
+			insert into review values(rev_seq.nextval, #{rs_idx}, #{rev_title}, #{rev_score}, #{rev_id}, #{rev_file}, #{rev_content}, default)
 		]]>
 	</insert>
-	<!-- 
-	<update>
+	<!-- 리뷰 업데이트 -->
+	<update id="updateReview" parameterType="com.matjip.bean.ReviewBean">
 		<![CDATA[
+			update review set rev_title=#{rev_title}, rev_score=#{rev_score}, rev_file=#{rev_file}, rev_content=#{rev_content} where rev_idx=${rev_idx}
 		]]>
 	</update>
-	<delete>
+	<!-- 리뷰 삭제 -->
+	<delete id="deleteReview" parameterType="java.lang.Integer">
 		<![CDATA[
+			delete from review where rev_idx = #{rev_idx}
 		]]>
-	</delete> -->
+	</delete>
+	<!-- 리뷰 idx로 단일 리뷰 불러오기 -->
+	<select id="reviewByRevId" parameterType="java.lang.Integer" resultType="com.matjip.bean.ReviewBean">
+		<![CDATA[
+			select * from review where rev_idx = ${rev_idx}
+		]]>
+	</select>
 	<!-- 모든 리뷰 보기 -->
-	<select id="reviewAll" resultType="com.matjip.dto.ReviewDTO">
+	<select id="reviewAll" resultType="com.matjip.bean.ReviewBean">
 		<![CDATA[
 			select * from review order by rev_regdate desc
 		]]>
 	</select>
 	<!-- 가게별 리뷰 -->
-	<select id="reviewByResId" parameterType="java.lang.Integer" resultType="com.matjip.dto.ReviewDTO">
+	<select id="reviewByResId" parameterType="java.lang.Integer" resultType="com.matjip.bean.ReviewBean">
 		<![CDATA[
 			select * from review where rs_idx = #{rs_idx} order by rev_regdate desc
 		]]>
 	</select>
 	<!-- 지역별 리뷰 -->
-	<select id="reviewByRegionCate" parameterType="java.lang.String" resultType="com.matjip.dto.ReviewDTO">
+	<select id="reviewByRegionCate" parameterType="java.lang.String" resultType="com.matjip.bean.ReviewBean">
 		<![CDATA[
 			select a.* from review a, restaurant b where b.rs_region_cate = #{rs_region_cate} and a.rs_idx = b.rs_idx order by a.rev_regdate desc
 		]]>

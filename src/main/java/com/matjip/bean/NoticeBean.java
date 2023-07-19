@@ -1,9 +1,9 @@
-package com.matjip.dto;
+package com.matjip.bean;
 
 import lombok.Data;
 
 @Data
-public class NoticeDTO {
+public class NoticeBean {
 	private int noti_idx;  
 	private String noti_title;
 	private String noti_content; 

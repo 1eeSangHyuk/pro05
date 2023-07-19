@@ -4,7 +4,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.matjip.dto.UserDTO;
+import com.matjip.bean.UserBean;
 
 @Repository
 public class UserDAO {
@@ -17,7 +17,7 @@ public class UserDAO {
 		return user_name;
 	}
 	
-	public void testInsert(UserDTO userDTO) {
+	public void testInsert(UserBean userDTO) {
 		sqlSessionTemplate.insert("user.testInsert", userDTO);
 	}
 }

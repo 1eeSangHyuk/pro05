@@ -3,6 +3,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<c:set var="root" value="${pageContext.request.contextPath }" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,11 +23,18 @@
 				<td>${review.rev_title }</td>
 				<td>${review.rev_score }</td>
 				<td>${review.rev_id }</td>
-				<c:if test="${!empty review.rev_file }">
-					<td>${review.rev_file }</td>
-				</c:if>
+				<c:choose>
+					<c:when test="${!empty review.rev_file }">
+						<td><img src="${root }/resources/upload/${review.rev_file }" alt="${review.rev_file }" width="50%"></td>
+					</c:when>
+					<c:otherwise>
+						<td>첨부 이미지 없음</td>
+					</c:otherwise>
+				</c:choose>
 				<td>${review.rev_content }</td>
 				<td>${review.rev_regdate }</td>
+				<td><a href="/review/deleteReview?rev_idx=${review.rev_idx }">리뷰 삭제하기</a></td>
+				<td><a href="/review/updateReview?rev_idx=${review.rev_idx }">리뷰 수정하기</a></td>
 			</tr>
 		</c:forEach>
 		</tbody>

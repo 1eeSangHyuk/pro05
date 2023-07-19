@@ -54,12 +54,12 @@ CREATE TABLE restaurant (rs_idx VARCHAR2(20) PRIMARY KEY NOT NULL, -- 레스토�
 CREATE SEQUENCE REST_SEQ START WITH 1 INCREMENT BY 1 NOCYCLE ;
 
 CREATE TABLE review (rev_idx NUMBER(20) PRIMARY KEY NOT NULL,   -- 리뷰 idx
-                     rs_idx VARCHAR2(20), --레스토랑 idx,
+                     rs_idx VARCHAR2(20) NOT NULL, --레스토랑 idx,
                      rev_title VARCHAR2(100) NOT NULL,  --제목
-                     rev_score NUMBER(1),   --평점 1~5
-                     rev_id VARCHAR2(20),   --리뷰자id
+                     rev_score NUMBER(1) NOT NULL,   --평점 1~5
+                     rev_id VARCHAR2(20) NOT NULL,   --리뷰자id
                      rev_file VARCHAR2(200),    --첨부파일
-                     rev_content VARCHAR2(1000),      --리뷰
+                     rev_content VARCHAR2(1000) NOT NULL,      --리뷰
                      rev_regdate date DEFAULT current_timestamp,    --작성일
                      constraint review_idx_fk foreign key(rs_idx) references restaurant(rs_idx),
                      constraint review_user_fk foreign key(rev_id) references user_tbl(user_id)
@@ -67,17 +67,17 @@ CREATE TABLE review (rev_idx NUMBER(20) PRIMARY KEY NOT NULL,   -- 리뷰 idx
 
 create sequence rev_seq start with 1 INCREMENT by 1 nocycle;
 
---CREATE TABLE qna (qna_idx VARCHAR2(20) PRIMARY KEY NOT NULL,   --qna_idx        
---                  qna_title VARCHAR2(100) NOT NULL, --제목
---                  qna_content VARCHAR2(1000) NOT NULL,  --내용
---                  qna_id varchar(20),   --작성자id
---                  qna_answer VARCHAR2(500), --
---                  qna_resdate datetime default current_timestamp,
---                  lev NUMBER(5),
---                  parno VARCHAR2(8),
---                  qna_file VARCHAR2(200)
---); 
-
+CREATE TABLE qna (
+  qna_idx NUMBER(20) PRIMARY KEY NOT NULL,   
+  qna_title VARCHAR2(100) NOT NULL,
+  qna_content VARCHAR2(1000) NOT NULL,
+  qna_id VARCHAR2(20),
+  qna_answer VARCHAR2(500),
+  qna_resdate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  lev NUMBER(5),
+  parno VARCHAR2(8),
+  qna_file VARCHAR2(200)
+);
 
 
 

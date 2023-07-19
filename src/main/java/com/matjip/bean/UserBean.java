@@ -1,9 +1,9 @@
-package com.matjip.dto;
+package com.matjip.bean;
 
 import lombok.Data;
 
 @Data
-public class UserDTO {
+public class UserBean {
 	public String user_id;
 	public String user_pw;
 	public String user_name; 

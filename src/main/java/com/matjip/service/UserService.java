@@ -3,8 +3,8 @@ package com.matjip.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.matjip.bean.UserBean;
 import com.matjip.dao.UserDAO;
-import com.matjip.dto.UserDTO;
 
 @Service
 public class UserService {
@@ -20,7 +20,7 @@ public class UserService {
 		return user_name;
 	}
 	
-	public void testInsert(UserDTO userDTO) {
+	public void testInsert(UserBean userDTO) {
 		for (int i = 1; i<=100; i++) {
 			if(i==1) {
 				userDTO.setUser_id("admin");

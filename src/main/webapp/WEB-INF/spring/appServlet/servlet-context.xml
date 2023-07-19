@@ -12,7 +12,7 @@
 		Controller 로 loading 함 -->
 	<annotation-driven />
 
-	<!-- 정적 파일 (.jsp, etc)에 대한 경로 설정 -->
+	<!-- 정적 파일 (사진, etc)에 대한 경로 설정 -->
 	<resources mapping="/resources/**" location="/resources/" />
 
 	<!-- 리졸버에 대한 접두사와 접미사 설정 -->
@@ -27,7 +27,7 @@
 		<beans:property name="locations">
 			<beans:list>
 				<beans:value>/WEB-INF/properties/db.properties</beans:value>
-				<!-- <beans:value>/WEB-INF/properties/option.properties</beans:value> -->
+				<beans:value>/WEB-INF/properties/fileUploadPath.properties</beans:value>
 			</beans:list>
 		</beans:property>
 	</beans:bean>
@@ -73,6 +73,14 @@
 
 	<!-- StandardServletMultipartResolver 등록 -->
 	<beans:bean	class="org.springframework.web.multipart.support.StandardServletMultipartResolver" id="multipartResolver" />
-
+	
+	<!-- interceptor -->
+	<interceptors>
+		<interceptor>
+			<mapping path="/review/updateReview"/>
+			<mapping path="/review/deleteReview"/>
+			<beans:bean class="com.matjip.interceptor.ReviewInterceptor" />
+		</interceptor>
+	</interceptors>
 
 </beans:beans>

@@ -12,7 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.matjip.dto.UserDTO;
+import com.matjip.bean.UserBean;
 import com.matjip.service.UserService;
 
 /**
