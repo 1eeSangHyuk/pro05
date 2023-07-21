@@ -21,10 +21,10 @@
 			delete from review where rev_idx = #{rev_idx}
 		]]>
 	</delete>
-	<!-- 리뷰 idx로 단일 리뷰 불러오기 -->
+	<!-- 내가 쓴 리뷰 -->
 	<select id="reviewByRevId" parameterType="java.lang.Integer" resultType="com.matjip.bean.ReviewBean">
 		<![CDATA[
-			select * from review where rev_idx = ${rev_idx}
+			select * from review where rev_idx = ${rev_idx} order by rev_regdate desc
 		]]>
 	</select>
 	<!-- 모든 리뷰 보기 -->
@@ -34,9 +34,15 @@
 		]]>
 	</select>
 	<!-- 가게별 리뷰 -->
-	<select id="reviewByResId" parameterType="java.lang.Integer" resultType="com.matjip.bean.ReviewBean">
+	<select id="reviewByResId" parameterType="java.lang.String" resultType="com.matjip.bean.ReviewBean">
 		<![CDATA[
 			select * from review where rs_idx = #{rs_idx} order by rev_regdate desc
+		]]>
+	</select>
+	<!-- 가게별 전체 리뷰 개수 -->
+	<select id="getReviewCntByResId" parameterType="java.lang.String" resultType="java.lang.Integer">
+		<![CDATA[
+			select count(*) as revCnt from review where rs_idx = #{rs_idx}	
 		]]>
 	</select>
 	<!-- 지역별 리뷰 -->
@@ -45,4 +51,34 @@
 			select a.* from review a, restaurant b where b.rs_region_cate = #{rs_region_cate} and a.rs_idx = b.rs_idx order by a.rev_regdate desc
 		]]>
 	</select>
+	<!-- 레스토랑 코드로 레스토랑 이름 가져오기 -->
+	<select id="rsNameByrsIdx" parameterType="java.lang.String" resultType="java.lang.String">
+		<![CDATA[
+			select rs_name from restaurant where rs_idx=#{rs_idx}
+		]]>
+	</select>
+	<!-- 레스토랑-region 지역 코드 지역 이름 연결-->
+	<select id="regCodeName" parameterType="java.lang.String" resultType="java.lang.String">
+		<![CDATA[
+			select b.* from restaurant a, region b where a.rs_region_cate = b.region_cate and a.rs_idx=#{rs_idx}
+		]]>
+	</select>
+	<!-- 레스토랑-food 음식 코드 음식 이름 연결-->
+	<select id="foodCodeName" parameterType="java.lang.String" resultType="java.lang.String">
+		<![CDATA[
+			select b.* from restaurant a, food b where a.rs_region_cate = b.food_cate and a.rs_idx=#{rs_idx}
+		]]>
+	</select>
+	<!-- 리뷰 좋아요 추가 -->
+	<update id="addRevLike" parameterType="java.lang.Integer">
+		<![CDATA[
+			update review set rev_like = #{rev_like}+1 where rev_idx = #{rev_idx}
+		]]>
+	</update>
+	<!-- 리뷰 좋아요 취소 -->
+	<update id="delRevLike" parameterType="java.lang.Integer">
+		<![CDATA[
+			update review set rev_like = #{rev_like}-1 where rev_idx = #{rev_idx}
+		]]>
+	</update>
 </mapper>

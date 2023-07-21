@@ -28,6 +28,7 @@
 			<beans:list>
 				<beans:value>/WEB-INF/properties/db.properties</beans:value>
 				<beans:value>/WEB-INF/properties/fileUploadPath.properties</beans:value>
+				<beans:value>/WEB-INF/properties/option.properties</beans:value>
 			</beans:list>
 		</beans:property>
 	</beans:bean>
@@ -80,6 +81,17 @@
 			<mapping path="/review/updateReview"/>
 			<mapping path="/review/deleteReview"/>
 			<beans:bean class="com.matjip.interceptor.ReviewInterceptor" />
+		</interceptor>
+		<interceptor>
+			<mapping path="user/**"/>
+			<mapping path="/restaurant/**"/>
+			<mapping path="/review/**"/>
+			<exclude-mapping path="/restaurant/main"/>
+			<exclude-mapping path="/user/login"/>
+			<exclude-mapping path="/user/login_prodedure"/>
+			<exclude-mapping path="/user/join"/>
+			<exclude-mapping path="/user/join_prodedure"/>
+			<beans:bean class="com.matjip.interceptor.UserInterceptor" />
 		</interceptor>
 	</interceptors>
 

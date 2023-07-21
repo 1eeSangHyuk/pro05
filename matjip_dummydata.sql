@@ -6,9 +6,21 @@ desc restaurant;
 select * from review order by rev_idx desc;
 desc review;
 
+select a.*, b.rs_name, c.region_name, d.food_name 
+  from review a, restaurant b, region c, food d 
+ where a.rs_idx=b.rs_idx 
+   and b.rs_region_cate=c.region_cate 
+   and b.rs_food_cate = d.food_cate 
+   and a.rev_id='user41'
+order by a.rev_regdate desc
+;
 
-insert into review values(1001, '1', '테스트리뷰1', 5, 'user41', null, '테스트리뷰1입니다.', default);
-delete from review where rev_idx = 1008;
+SELECT * FROM REVIEW WHERE REV_ID='user41' order by rev_regdate desc;
+
+desc region;
+
+--insert into review values(1001, '1', '테스트리뷰1', 5, 'user41', null, '테스트리뷰1입니다.', default);
+--delete from review where rev_idx = 1008;
 commit;
 
 -- 가게 평점순 정렬

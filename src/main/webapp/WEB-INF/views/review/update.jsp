@@ -41,6 +41,9 @@
 		<form:textarea path="rev_content"/><br>
 		<form:errors path="rev_content" style="color:red;" /><br>
 		
+		<input type="hidden" id="page" name="page" value=${page }>
+		<input type="hidden" id="revPage" name="revPage" value=${revPage }>
+		
 		<form:button type="submit">업데이트</form:button>
 	</form:form>
 	<!-- <script>

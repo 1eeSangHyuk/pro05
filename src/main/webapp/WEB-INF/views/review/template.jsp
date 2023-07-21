@@ -32,6 +32,7 @@
 					</c:otherwise>
 				</c:choose>
 				<td>${review.rev_content }</td>
+				<!-- <td><button onclick=""></button></td> -->
 				<td>${review.rev_regdate }</td>
 				<td><a href="/review/deleteReview?rev_idx=${review.rev_idx }">리뷰 삭제하기</a></td>
 				<td><a href="/review/updateReview?rev_idx=${review.rev_idx }">리뷰 수정하기</a></td>

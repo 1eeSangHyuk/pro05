@@ -65,6 +65,9 @@ CREATE TABLE review (rev_idx NUMBER(20) PRIMARY KEY NOT NULL,   -- 리뷰 idx
                      constraint review_user_fk foreign key(rev_id) references user_tbl(user_id)
 );
 
+alter table review add rev_like number default 0;
+alter table review drop column rev_like;
+
 create sequence rev_seq start with 1 INCREMENT by 1 nocycle;
 
 CREATE TABLE qna (
@@ -79,5 +82,6 @@ CREATE TABLE qna (
   qna_file VARCHAR2(200)
 );
 
+commit;
 
 
