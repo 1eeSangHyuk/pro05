@@ -2,6 +2,7 @@ package com.matjip.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,7 @@ public class ReviewController {
 	
 	
 	 @GetMapping("/rs_idx/{rs_idx}") 
-	 public String reviewByResId(@PathVariable int rs_idx, Model model) { 
+	 public String reviewByResId(@PathVariable String rs_idx, Model model) { 
 		 List<ReviewBean> reviewList = reviewService.reviewByResId(rs_idx); 
 		 model.addAttribute("reviewList",
 		 reviewList); return "review/template"; 
@@ -53,9 +54,11 @@ public class ReviewController {
 		return "review/template";
 	}
 	
-	@GetMapping("/myReview/{sid}")
-	public String reviewByRevId(@PathVariable int rev_idx, Model model) {
-		List<ReviewBean> reviewList = reviewService.reviewByRevId(rev_idx);
+	@GetMapping("/myReview")
+	public String reviewByRevId(HttpServletRequest request,
+							    Model model) {
+		String rev_id = (String) request.getSession().getAttribute("sid");
+		List<ReviewBean> reviewList = reviewService.reviewByRevId(rev_id);
 		model.addAttribute("reviewList", reviewList);
 		return "review/template";
 	}
@@ -92,7 +95,7 @@ public class ReviewController {
 																@RequestParam int page,
 																@RequestParam int revPage,
 																Model model) {
-		ReviewBean reviewBean = reviewService.reviewByRevId(rev_idx);
+		ReviewBean reviewBean = reviewService.reviewByRevIdx(rev_idx);
 		model.addAttribute("reviewBean", reviewBean);
 		model.addAttribute("page", page);
 		model.addAttribute("revPage", revPage);

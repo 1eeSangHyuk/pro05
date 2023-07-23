@@ -102,7 +102,7 @@ public class RestService {
 	}
 	
 	//상세페이지에 출력할 데이터 가져오기
-	public RestBean getRestDetail(int rs_idx) {
+	public RestBean getRestDetail(String rs_idx) {
 		
 		return restDAO.getRestDetail(rs_idx);
 	}

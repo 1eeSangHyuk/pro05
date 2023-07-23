@@ -22,7 +22,7 @@ public class RestDAO {
 	}
 
 	// 상세페이지에 출력할 데이터 가져오기
-	public RestBean getRestDetail(int rs_idx) {
+	public RestBean getRestDetail(String rs_idx) {
 		
 		return sqlSessionTemplate.selectOne("restaurant.getRestDetail", rs_idx);
 	}

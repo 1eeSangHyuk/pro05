@@ -23,7 +23,7 @@ public class ReviewInterceptor implements HandlerInterceptor{
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {		
 		int rev_idx = Integer.parseInt(request.getParameter("rev_idx"));
-		ReviewBean tmpReviewBean = reviewService.reviewByRevId(rev_idx);
+		ReviewBean tmpReviewBean = reviewService.reviewByRevIdx(rev_idx);
 		if(!tmpReviewBean.getRev_id().equals(request.getSession().getAttribute("sid"))) {
 			/*
 			 * System.out.println("sid : "+request.getSession().getAttribute("sid"));

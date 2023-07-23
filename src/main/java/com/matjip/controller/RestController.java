@@ -58,7 +58,7 @@ public class RestController {
 	}
 
 	@GetMapping("/detail")
-	public String restDetail(@RequestParam("rs_idx") int rs_idx,
+	public String restDetail(@RequestParam("rs_idx") String rs_idx,
 													 @RequestParam("page") int page, 
 													 @RequestParam(value="revPage", defaultValue="1") int revPage,
 													 @ModelAttribute("loggedUserInfo") UserBean loggedUserInfo,
@@ -117,7 +117,7 @@ public class RestController {
 	}
 
 	@GetMapping("/modify")
-	public String restModify(@RequestParam("rs_idx") int rs_idx, @RequestParam("page") int page,
+	public String restModify(@RequestParam("rs_idx") String rs_idx, @RequestParam("page") int page,
 			@ModelAttribute("modifyRestBean") RestBean modifyRestBean, Model model) {
 
 		model.addAttribute("rs_idx", rs_idx);

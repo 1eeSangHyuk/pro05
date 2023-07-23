@@ -29,23 +29,27 @@ public class ReviewDAO {
 		sqlSessionTemplate.delete("review.deleteReview", rev_idx);
 	}
 		
-	public List<ReviewBean> reviewByRevId(int rev_idx){
-		return sqlSessionTemplate.selectList("review.reviewByRevId", rev_idx);
+	public ReviewBean reviewByRevIdx(int rev_idx){
+		return sqlSessionTemplate.selectOne("review.reviewByRevIdx", rev_idx);
+	}
+	
+	public List<ReviewBean> reviewByRevId(String rev_id){
+		return sqlSessionTemplate.selectList("review.reviewByRevId", rev_id);
 	}
 	
 	public List<ReviewBean> reviewAll(){
 		return sqlSessionTemplate.selectList("review.reviewAll");
 	}
 	
-	public List<ReviewBean> reviewByResId(int rs_idx){
+	public List<ReviewBean> reviewByResId(String rs_idx){
 		return sqlSessionTemplate.selectList("review.reviewByResId", rs_idx);
 	}
 	
-	public List<ReviewBean> reviewByResId(int rs_idx, RowBounds rowBounds){
+	public List<ReviewBean> reviewByResId(String rs_idx, RowBounds rowBounds){
 		return sqlSessionTemplate.selectList("review.reviewByResId", rs_idx, rowBounds);
 	}
 	
-	public int getReviewCntByResId(int rs_idx){
+	public int getReviewCntByResId(String rs_idx){
 		return sqlSessionTemplate.selectOne("review.getReviewCntByResId", rs_idx);
 	}
 	

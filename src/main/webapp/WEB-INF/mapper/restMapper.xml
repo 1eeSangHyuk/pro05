@@ -14,7 +14,7 @@
 	</select> 
 	
 		<!-- 맛집 상세보기 -->
- 	<select id="getRestDetail" parameterType="java.lang.Integer" 
+ 	<select id="getRestDetail" parameterType="java.lang.String" 
  								resultType="com.matjip.bean.RestBean">
 		<![CDATA[
 			

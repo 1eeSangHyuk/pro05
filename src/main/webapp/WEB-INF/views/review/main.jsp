@@ -14,6 +14,7 @@
 <body>
 	<h2>reviewMain</h2>
 	<h5><a href="/review/all">모든 리뷰 보기 - 최신리뷰순 정렬</a></h5>
+	<h5><a href="/review/myReview">내가 작성한 리뷰 보기</a></h5>
 	<h5><a href="/review/rs_idx/1">가게별 리뷰 - 음식점01</a></h5>
 	<h5><a href="/review/region/01">지역별 리뷰 - 서귀포</a></h5>
 	<h5><a href="/review/region/02">지역별 리뷰 - 제주</a></h5>

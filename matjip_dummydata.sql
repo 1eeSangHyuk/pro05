@@ -4,6 +4,7 @@ select * from user_tbl;
 select * from restaurant;
 desc restaurant;
 select * from review order by rev_idx desc;
+select * from review where  rev_id like lower('USER41') order by rev_regdate desc;
 desc review;
 
 select a.*, b.rs_name, c.region_name, d.food_name 

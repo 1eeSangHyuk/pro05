@@ -69,26 +69,30 @@ public class ReviewService {
 		reviewDAO.deleteReview(rev_idx);
 	}
 	
-	public List<ReviewBean> reviewByRevId(int rev_idx){
-		return reviewDAO.reviewByRevId(rev_idx);
+	public ReviewBean reviewByRevIdx(int rev_idx){
+		return reviewDAO.reviewByRevIdx(rev_idx);
+	}
+	
+	public List<ReviewBean> reviewByRevId(String rev_id){
+		return reviewDAO.reviewByRevId(rev_id);
 	}
 	
 	public List<ReviewBean> reviewAll(){
 		return reviewDAO.reviewAll();
 	}
 	
-	public List<ReviewBean> reviewByResId(int rs_idx){
+	public List<ReviewBean> reviewByResId(String rs_idx){
 		return reviewDAO.reviewByResId(rs_idx);
 	}
 	
-	public List<ReviewBean> reviewByResId(int rs_idx, int revPage){
+	public List<ReviewBean> reviewByResId(String rs_idx, int revPage){
 		int start = (revPage - 1) * revListCnt;
 		RowBounds rowBounds = new RowBounds(start, revListCnt);
 		return reviewDAO.reviewByResId(rs_idx, rowBounds);
 	}
 	
 	// 리뷰 페이징 처리
-	public PageBean getReviewCntByResId(int rs_idx, int currentPage){
+	public PageBean getReviewCntByResId(String rs_idx, int currentPage){
 		// 가게당 리뷰 전체 개수 가져오기
 		int revCnt = reviewDAO.getReviewCntByResId(rs_idx);
 		
