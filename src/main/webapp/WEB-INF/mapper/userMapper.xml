@@ -37,8 +37,7 @@
 		]]>
 	</update>
 	
-	<select id="getLoggedUserInfo" parameterType="java.lang.String" 
-	                                 resultType="com.matjip.bean.UserBean">
+	<select id="getLoggedUserInfo" parameterType="java.lang.String" resultType="com.matjip.bean.UserBean">
 		<![CDATA[
 			select * from user_tbl where user_id = #{sid}
 		]]>

@@ -10,9 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.matjip.bean.FoodBean;
 import com.matjip.bean.PageBean;
-import com.matjip.bean.RegionBean;
 import com.matjip.bean.ReviewBean;
 import com.matjip.dao.ReviewDAO;
 
@@ -21,7 +19,7 @@ public class ReviewService {
 	@Autowired
 	private ReviewDAO reviewDAO;
 	
-	@Value("${uploadPath}")
+	@Value("${path.upload}")
 	private String uploadPath; 
 	
 	//한 페이지에 나오는 게시물 수
@@ -48,10 +46,6 @@ public class ReviewService {
 			String rev_file = saveUploadFile(uploadFile);
 			reviewBean.setRev_file(rev_file);
 		}
-		
-		// 받아오면 삭제
-		reviewBean.setRs_idx("1");
-		reviewBean.setRev_id("user41");
 		
 		reviewDAO.insertReview(reviewBean);
 	}
@@ -81,18 +75,18 @@ public class ReviewService {
 		return reviewDAO.reviewAll();
 	}
 	
-	public List<ReviewBean> reviewByResId(String rs_idx){
+	public List<ReviewBean> reviewByResId(int rs_idx){
 		return reviewDAO.reviewByResId(rs_idx);
 	}
 	
-	public List<ReviewBean> reviewByResId(String rs_idx, int revPage){
+	public List<ReviewBean> reviewByResId(int rs_idx, int revPage){
 		int start = (revPage - 1) * revListCnt;
 		RowBounds rowBounds = new RowBounds(start, revListCnt);
 		return reviewDAO.reviewByResId(rs_idx, rowBounds);
 	}
 	
 	// 리뷰 페이징 처리
-	public PageBean getReviewCntByResId(String rs_idx, int currentPage){
+	public PageBean getReviewCntByResId(int rs_idx, int currentPage){
 		// 가게당 리뷰 전체 개수 가져오기
 		int revCnt = reviewDAO.getReviewCntByResId(rs_idx);
 		
@@ -105,15 +99,15 @@ public class ReviewService {
 		return reviewDAO.reviewByRegionCate(rs_region_cate);
 	}
 	
-	public String rsNameByrsIdx(String rs_idx) {
+	public String rsNameByrsIdx(int rs_idx) {
 		return reviewDAO.rsNameByrsIdx(rs_idx);
 	}
 	
-	public String regCodeName(String rs_idx) {
+	public String regCodeName(int rs_idx) {
 		return reviewDAO.regCodeName(rs_idx);
 	}
 	
-	public String foodCodeName(String rs_idx) {
+	public String foodCodeName(int rs_idx) {
 		return reviewDAO.foodCodeName(rs_idx);
 	}
 	

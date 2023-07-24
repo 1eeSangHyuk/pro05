@@ -33,7 +33,7 @@ public class ReviewInsert {
 			pstmt = con.prepareStatement(sql);
 
 			for (int i = 1; i <= 1000; i++) {
-				pstmt.setString(1, randomResIdxGen());
+				pstmt.setInt(1, randomRsIdxGen());
 				pstmt.setString(2, "제목" + i);
 				pstmt.setInt(3, randomScoreGen());
 				pstmt.setString(4, randomRevIdGen());
@@ -60,8 +60,8 @@ public class ReviewInsert {
 		}
 	}
 
-	public String randomResIdxGen() {
-		return ((int) (1 + Math.random() * 30))+"";
+	public int randomRsIdxGen() {
+		return (int) (1 + Math.random() * 30);
 	}
 	
 	public int randomScoreGen() {

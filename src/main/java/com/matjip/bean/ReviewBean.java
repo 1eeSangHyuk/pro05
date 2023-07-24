@@ -15,7 +15,7 @@ public class ReviewBean {
 	private int rev_idx;
 	
 	//@NotNull 잘못된 접근입니다.(rs_idx?)
-	private String rs_idx;
+	private int rs_idx;
 	
 	@NotBlank
 	@Size(max=30)

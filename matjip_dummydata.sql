@@ -1,11 +1,18 @@
 select table_name FROM user_tables;
 
 select * from user_tbl;
+select * from user_tbl where user_id='user41';
 select * from restaurant;
+select b.region_name from restaurant a, region b where a.rs_region_cate = b.region_cate and a.rs_idx=1;
 desc restaurant;
 select * from review order by rev_idx desc;
 select * from review where  rev_id like lower('USER41') order by rev_regdate desc;
 desc review;
+
+select * from region order by region_cate;
+select * from food order by food_cate;
+
+
 
 select a.*, b.rs_name, c.region_name, d.food_name 
   from review a, restaurant b, region c, food d 

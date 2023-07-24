@@ -94,6 +94,7 @@
 				</ul>
 			</div>			
 			<div class="text-right">
+				<a href="${root}/" class="btn btn-primary">메인으로</a>
 				<a href="${root}/restaurant/write?&page=${page}" class="btn btn-primary">글쓰기</a>
 			</div>
 			

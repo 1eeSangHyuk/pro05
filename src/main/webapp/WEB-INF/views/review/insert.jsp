@@ -15,6 +15,7 @@
 	<h2>reviewInsert</h2>
 	<form:form action="/review/insertReview" method="post" modelAttribute="reviewBean" enctype="multipart/form-data" >
 		<form:hidden path="rs_idx"/>
+		<form:hidden path="rev_idx" />
 		<form:label path="rev_title">제목</form:label>
 		<form:input type="text" path="rev_title"/><br>
 		<form:errors path="rev_title" style="color:red;" /><br>

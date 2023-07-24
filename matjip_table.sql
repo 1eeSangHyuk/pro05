@@ -37,8 +37,10 @@ CREATE TABLE food (food_cate varchar(10) primary key,    --{01 : 식사, 02 : �
                    food_name varchar(50) not null
 );
 
+drop table restaurant;
+drop sequence rev_seq;
 
-CREATE TABLE restaurant (rs_idx VARCHAR2(20) PRIMARY KEY NOT NULL, -- 레스토랑idx
+CREATE TABLE restaurant (rs_idx number PRIMARY KEY NOT NULL, -- 레스토랑idx
                          rs_food_cate VARCHAR(10), -- 음식분류  식사/디저트
                          rs_name VARCHAR2(50), -- 이름
                          rs_phone VARCHAR2(13),    -- 전화번호
@@ -50,11 +52,13 @@ CREATE TABLE restaurant (rs_idx VARCHAR2(20) PRIMARY KEY NOT NULL, -- 레스토�
                          constraint rs_region_cate_fk foreign key(rs_region_cate) references region(region_cate)
 );
 
+CREATE SEQUENCE REST_SEQ START WITH 1 INCREMENT BY 1 NOCYCLE;
 
-CREATE SEQUENCE REST_SEQ START WITH 1 INCREMENT BY 1 NOCYCLE ;
+drop sequence rev_seq;
+drop table review;
 
 CREATE TABLE review (rev_idx NUMBER(20) PRIMARY KEY NOT NULL,   -- 리뷰 idx
-                     rs_idx VARCHAR2(20) NOT NULL, --레스토랑 idx,
+                     rs_idx number NOT NULL, --레스토랑 idx,
                      rev_title VARCHAR2(100) NOT NULL,  --제목
                      rev_score NUMBER(1) NOT NULL,   --평점 1~5
                      rev_id VARCHAR2(20) NOT NULL,   --리뷰자id
@@ -65,10 +69,8 @@ CREATE TABLE review (rev_idx NUMBER(20) PRIMARY KEY NOT NULL,   -- 리뷰 idx
                      constraint review_user_fk foreign key(rev_id) references user_tbl(user_id)
 );
 
-alter table review add rev_like number default 0;
-alter table review drop column rev_like;
-
 create sequence rev_seq start with 1 INCREMENT by 1 nocycle;
+
 
 CREATE TABLE qna (
   qna_idx NUMBER(20) PRIMARY KEY NOT NULL,   

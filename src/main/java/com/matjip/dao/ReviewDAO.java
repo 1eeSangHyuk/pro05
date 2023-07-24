@@ -41,15 +41,15 @@ public class ReviewDAO {
 		return sqlSessionTemplate.selectList("review.reviewAll");
 	}
 	
-	public List<ReviewBean> reviewByResId(String rs_idx){
+	public List<ReviewBean> reviewByResId(int rs_idx){
 		return sqlSessionTemplate.selectList("review.reviewByResId", rs_idx);
 	}
 	
-	public List<ReviewBean> reviewByResId(String rs_idx, RowBounds rowBounds){
+	public List<ReviewBean> reviewByResId(int rs_idx, RowBounds rowBounds){
 		return sqlSessionTemplate.selectList("review.reviewByResId", rs_idx, rowBounds);
 	}
 	
-	public int getReviewCntByResId(String rs_idx){
+	public int getReviewCntByResId(int rs_idx){
 		return sqlSessionTemplate.selectOne("review.getReviewCntByResId", rs_idx);
 	}
 	
@@ -57,15 +57,15 @@ public class ReviewDAO {
 		return sqlSessionTemplate.selectList("review.reviewByRegionCate", rs_region_cate);
 	}
 	
-	public String rsNameByrsIdx(String rs_idx) {
+	public String rsNameByrsIdx(int rs_idx) {
 		return sqlSessionTemplate.selectOne("review.rsNameByrsIdx", rs_idx);
 	}
 	
-	public String regCodeName(String rs_idx) {
+	public String regCodeName(int rs_idx) {
 		return sqlSessionTemplate.selectOne("review.regCodeName", rs_idx);
 	}
 	
-	public String foodCodeName(String rs_idx) {
+	public String foodCodeName(int rs_idx) {
 		return sqlSessionTemplate.selectOne("review.foodCodeName", rs_idx);
 	}
 	

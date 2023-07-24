@@ -26,7 +26,7 @@ public class ReviewController {
 	@Autowired
 	private ReviewService reviewService;
 	
-	@GetMapping
+	@GetMapping("/main")
 	public String reviewMain() {
 		return "review/main";
 	}
@@ -40,7 +40,7 @@ public class ReviewController {
 	
 	
 	 @GetMapping("/rs_idx/{rs_idx}") 
-	 public String reviewByResId(@PathVariable String rs_idx, Model model) { 
+	 public String reviewByResId(@PathVariable int rs_idx, Model model) { 
 		 List<ReviewBean> reviewList = reviewService.reviewByResId(rs_idx); 
 		 model.addAttribute("reviewList",
 		 reviewList); return "review/template"; 
@@ -66,8 +66,9 @@ public class ReviewController {
 	@GetMapping("/insertReview")
 	public String getInsertReview(@ModelAttribute ReviewBean reviewBean,
 																@RequestParam int rs_idx,
-			 													@RequestParam int page,
+			 													@RequestParam("page") int page,
 			 													Model model) {
+		reviewBean.setRs_idx(rs_idx);
 		model.addAttribute("rs_idx", rs_idx);
 		model.addAttribute("page", page);
 		return "review/insert";
@@ -76,6 +77,7 @@ public class ReviewController {
 	@PostMapping("/insertReview")
 	public String postInsertReview(@Valid @ModelAttribute ReviewBean reviewBean,
 																 @RequestParam int page,
+				 												 HttpServletRequest request,
 																 BindingResult result, Model model) {
 		model.addAttribute("rs_idx", reviewBean.getRs_idx());
 		model.addAttribute("page", page);
@@ -86,6 +88,7 @@ public class ReviewController {
 			});
 			return "review/insert";
 		}
+		reviewBean.setRev_id((String) request.getSession().getAttribute("sid"));
 		reviewService.insertReview(reviewBean);
 		return "review/insert_success";
 	}
@@ -131,5 +134,11 @@ public class ReviewController {
 	@GetMapping("/invalidUser")
 	public String invalidUser() {
 		return "review/invalid_user";
+	}
+	
+	@GetMapping("/pop")
+	public String imgPop(@RequestParam String img, Model model) {
+		model.addAttribute("img", img);
+		return "review/pop";
 	}
 }

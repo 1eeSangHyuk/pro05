@@ -32,13 +32,22 @@
 						</div>
 						<div class="form-group">
 							<form:label path="rs_region_cate">지역분류</form:label>
-							<form:input path="rs_region_cate" class="form-control"/>
+							<form:select path="rs_region_cate">
+							<form:options items="${requestScope.regionList }" itemLabel="region_name" itemValue="region_cate"/>
+							<%-- <c:if test="${requestScope.regionList.region_cate eq modifyRestBean.rs_region_cate }">
+								
+							</c:if> --%>
+							</form:select>
+							<%-- <form:input path="rs_region_cate" class="form-control"/> --%>
 							<input type="hidden" name="rs_idx" value="${modifyRestBean.rs_idx}">
 							<input type="hidden" name="rs_addr" value="${modifyRestBean.rs_addr}">
 						</div>
 						<div class="form-group">
 							<form:label path="rs_food_cate">음식분류</form:label>
-							<form:input path="rs_food_cate" class="form-control" readonly="true"/>
+							<form:select path="rs_food_cate">
+								<form:options items="${requestScope.foodList }" itemLabel="food_name" itemValue="food_cate"/>
+							</form:select>
+							<%-- <form:input path="rs_food_cate" class="form-control" readonly="true"/> --%>
 						</div>
 						<div class="form-group">
 							<form:label path="rs_phone">전화번호</form:label>
@@ -59,7 +68,7 @@
 						<div class="form-group">
 							<div class="text-right">
 								<form:button class="btn btn-primary">수정완료</form:button>
-								<a href="${root }restaurant/read?rs_idx=${rs_idx }&page=${page } " class="btn btn-info">취소</a>
+								<a href="${root }restaurant/detail?rs_idx=${rs_idx }&page=${page } " class="btn btn-info">취소</a>
 							</div>
 						</div>
 					</form:form>

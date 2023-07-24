@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.matjip.bean.FoodBean;
 import com.matjip.bean.PageBean;
+import com.matjip.bean.RegionBean;
 import com.matjip.bean.RestBean;
 import com.matjip.bean.ReviewBean;
 import com.matjip.bean.UserBean;
@@ -38,6 +40,14 @@ public class RestController {
 	@Resource(name = "loginUserBean")
 	@Lazy
 	private UserBean loginUserBean;
+	
+	@Resource(name = "regionBean")
+	@Lazy
+	private RegionBean regionBean;
+	
+	@Resource(name = "foodBean")
+	@Lazy
+	private FoodBean foodBean;
 
 	@GetMapping("/main")
 	public String restaurant(@RequestParam(value = "page", defaultValue = "1") int page, Model model) {
@@ -58,17 +68,19 @@ public class RestController {
 	}
 
 	@GetMapping("/detail")
-	public String restDetail(@RequestParam("rs_idx") String rs_idx,
+	public String restDetail(@RequestParam("rs_idx") int rs_idx,
 													 @RequestParam("page") int page, 
 													 @RequestParam(value="revPage", defaultValue="1") int revPage,
 													 @ModelAttribute("loggedUserInfo") UserBean loggedUserInfo,
 												   HttpServletRequest request,
 													 Model model) {
-
+		
 		model.addAttribute("rs_idx", rs_idx);
 
 		// 상세페이지에 출력할 데이터 가져오기
 		RestBean restDetailBean = restService.getRestDetail(rs_idx);
+		restDetailBean.setRegion_name(reviewService.regCodeName(rs_idx));
+		restDetailBean.setFood_name(reviewService.foodCodeName(rs_idx));
 		model.addAttribute("restDetailBean", restDetailBean);
 
 		// SessionScope 에 있는 정보를 loginUserBean 에 넣기
@@ -117,7 +129,7 @@ public class RestController {
 	}
 
 	@GetMapping("/modify")
-	public String restModify(@RequestParam("rs_idx") String rs_idx, @RequestParam("page") int page,
+	public String restModify(@RequestParam("rs_idx") int rs_idx, @RequestParam("page") int page,
 			@ModelAttribute("modifyRestBean") RestBean modifyRestBean, Model model) {
 
 		model.addAttribute("rs_idx", rs_idx);
@@ -127,7 +139,12 @@ public class RestController {
 		modifyRestBean = restService.getRestDetail(rs_idx);
 		model.addAttribute("modifyRestBean", modifyRestBean);
 
-		modifyRestBean = restService.getRestDetail(rs_idx);
+		List<FoodBean> foodList = restService.getFoodTable();
+		System.out.println(foodList);
+		model.addAttribute("foodList", foodList);
+		List<RegionBean> regionList = restService.getRegionTable();
+		System.out.println(regionList);
+		model.addAttribute("regionList", regionList);
 
 		return "restaurant/modify";
 	}
