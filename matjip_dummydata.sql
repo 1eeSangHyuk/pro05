@@ -70,6 +70,8 @@ select * from food order by food_cate;
 
 commit;
 
+select * from restaurant;
+
 select * from review;
 select * from review where rev_score = 5 order by rev_regdate desc;
 select * from review where rev_score = 5 and rownum <= 10 order by rev_regdate desc;
