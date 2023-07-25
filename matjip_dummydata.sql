@@ -12,7 +12,7 @@ desc review;
 select * from region order by region_cate;
 select * from food order by food_cate;
 
-
+select count(*) from review where rev_id='user41';
 
 select a.*, b.rs_name, c.region_name, d.food_name 
   from review a, restaurant b, region c, food d 
@@ -69,6 +69,19 @@ select * from food order by food_cate;
 -- delete from user_tbl where user_id = 'test01';
 
 commit;
+
+select * from review;
+select * from review where rev_score = 5 order by rev_regdate desc;
+select * from review where rev_score = 5 and rownum <= 10 order by rev_regdate desc;
+select * 
+  from (select * 
+          from review 
+         where rev_score = 5 
+        order by rev_regdate desc)
+ where rownum <= 10
+;
+
+select * from (select * from review where rev_score = 5 order by rev_regdate desc) where rownum <= 10;
 
 --select * from review;
 --desc review;
