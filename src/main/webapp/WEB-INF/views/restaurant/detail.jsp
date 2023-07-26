@@ -67,7 +67,8 @@
 						</c:if>
 						<div class="form-group">
 							<div class="text-right">
-								<a href="${root}/restaurant/main?page=${page}" class="btn btn-primary">목록보기</a>
+							<a href="${root}/" class="btn btn-primary">메인으로</a>
+								<a href="${root}/restaurant/main?page=${page}" class="btn btn-primary">맛집 목록보기</a>
 								<a href="${root}/restaurant/modify?rs_idx=${rs_idx}&page=${page}" class="btn btn-info">수정하기</a>
 								<a href="${root}/restaurant/delete?rs_idx=${rs_idx}&page=${page}" class="btn btn-danger">삭제하기</a>
 								<%-- <c:if test="${loginUserBean.user_id == noticeDetailBean.user_id }"></c:if> --%>
@@ -82,39 +83,46 @@
 						<h2>${restDetailBean.rs_name }의 후기</h2>
 						<div class="form-group">
 							<c:forEach items="${reviewList }" var="review" varStatus="status">
-								<h4>${review.rev_title }</h4>
-								<!-- 제목 -->
-								<!-- 별점 -->
-								<h4>
-									<c:forEach begin="1" end="${review.rev_score }" step="1">★</c:forEach>
-								</h4>
-								<!-- 리뷰어 -->
-								<h4>${review.rev_id }</h4>
-								<!-- 이미지 -->
-								<c:if test="${!empty review.rev_file }">
-									<img src="${root }/resources/upload/${review.rev_file }"
-										alt="${review.rev_file }" width="30%" id="img1"
-										onclick="imgPop('${review.rev_file }')">
-								</c:if>
-								<!-- 후기내용 -->
-								<h4>${review.rev_content }</h4>
-								<!-- 작성일 -->
-								<h5>${review.rev_regdate }</h5>
-								<!-- 수정 삭제 -->
-								<div class="text-right">
-									<c:if test="${review.rev_id.equals(sid) }">
-										<a href="/review/updateReview?rev_idx=${review.rev_idx }&page=${page}&revPage=${revPageBean.currentP}" class="btn btn-info">리뷰 수정하기</a>
-										<a href="/review/deleteReview?rev_idx=${review.rev_idx }&rs_idx=${review.rs_idx }&page=${page}&revPage=${revPageBean.currentP}" class="btn btn-danger">리뷰 삭제하기</a>	
-									</c:if>
-								</div>
-								<c:if test="${!status.last }">
-									<h5>----------------------------------</h5>
-								</c:if>
+								<c:choose>
+									<c:when test="${!empty review }">
+										<h4>${review.rev_title }</h4>
+										<!-- 제목 -->
+										<!-- 별점 -->
+										<h4>
+											<c:forEach begin="1" end="${review.rev_score }" step="1">★</c:forEach>
+										</h4>
+										<!-- 리뷰어 -->
+										<h4>${review.rev_id }</h4>
+										<!-- 이미지 -->
+										<c:if test="${!empty review.rev_file }">
+											<img src="${root }/resources/upload/${review.rev_file }"
+												alt="${review.rev_file }" width="30%" id="img1"
+												onclick="imgPop('${review.rev_file }')">
+										</c:if>
+										<!-- 후기내용 -->
+										<h4>${review.rev_content }</h4>
+										<!-- 작성일 -->
+										<h5>${review.rev_regdate }</h5>
+										<!-- 수정 삭제 -->
+										<div class="text-right">
+											<c:if test="${review.rev_id.equals(sid) }">
+												<a href="/review/updateReview?rev_idx=${review.rev_idx }&page=${page}&revPage=${revPageBean.currentP}" class="btn btn-info">리뷰 수정하기</a>
+												<a href="/review/deleteReview?rev_idx=${review.rev_idx }&rs_idx=${review.rs_idx }&page=${page}&revPage=${revPageBean.currentP}" class="btn btn-danger">리뷰 삭제하기</a>	
+											</c:if>
+										</div>
+										<c:if test="${!status.last }">
+											<h5>----------------------------------</h5>
+										</c:if>
+									</c:when>
+								</c:choose>
 							</c:forEach>
+							<c:if test="${empty reviewList }">
+								<h4>리뷰가 없습니다. 첫 리뷰를 작성해주세요!</h4>
+							</c:if>
 							<div class="text-right">
-								<a href="/review/insertReview?rs_idx=${rs_idx }&page=${page}"
-									class="btn btn-primary">리뷰 작성하기</a>
+								<a href="/review/insertReview?rs_idx=${rs_idx }&page=${page}" class="btn btn-primary">리뷰 작성하기</a>
 							</div>
+							<br>
 							<div>
 								<ul class="pagination justify-content-center">
 									<c:choose>

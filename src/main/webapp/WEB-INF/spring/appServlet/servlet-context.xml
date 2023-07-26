@@ -77,12 +77,23 @@
 	<!-- interceptor -->
 	<interceptors>
 		<interceptor>
+			<mapping path="/"/>
+			<beans:bean class="com.matjip.interceptor.MainInterceptor"></beans:bean>
+		</interceptor>
+		<interceptor>
 			<mapping path="/user/modify"/>
 			<mapping path="/user/update_procedure"/>
 			<mapping path="/user/delete"/>
 			<mapping path="/restaurant/**"/>
 			<mapping path="/review/**"/>
+			<mapping path="/notice/**"/>
+			<mapping path="/qna/**"/>
 			<exclude-mapping path="/restaurant/main"/>
+			<exclude-mapping path="/restaurant/restaurantCate"/>
+			<exclude-mapping path="/restaurant/restaurantRegion"/>
+			<exclude-mapping path="/restaurant/restaurantFood"/>
+			<exclude-mapping path="/notice/main"/>
+			<exclude-mapping path="/qna/main"/>
 			<beans:bean class="com.matjip.interceptor.UserInterceptor" />
 		</interceptor>
 		<interceptor>

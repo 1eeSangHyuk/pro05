@@ -23,6 +23,11 @@ public class RestDAO {
 		// sqlSessionTemplate.selectList("restaurant.getRestList").toString());
 		return sqlSessionTemplate.selectList("restaurant.getRestList", rowBounds, rowBounds);
 	}
+	
+	// 지역, 음식종류별 최신 레스토랑 리스트 가져오기
+	public List<RestBean> getRecentRestList(){
+		return sqlSessionTemplate.selectList("restaurant.getRecentRestList");
+	}
 
 	// 상세페이지에 출력할 데이터 가져오기
 	public RestBean getRestDetail(int rs_idx) {

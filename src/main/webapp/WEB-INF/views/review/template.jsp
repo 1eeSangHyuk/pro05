@@ -37,7 +37,7 @@
 							<input type="text" id="region_name" name="region_name" class="form-control" value="${reviewBean.region_name }" disabled="disabled"/>
 						</div>	
 						<div class="form-group">
-							<label for="food_name">지역</label>
+							<label for="food_name">음식</label>
 							<input type="text" id="food_name" name="food_name" class="form-control" value="${reviewBean.food_name }" disabled="disabled"/>
 						</div>				
 						<div class="form-group">					

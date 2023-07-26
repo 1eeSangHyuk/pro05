@@ -1,5 +1,6 @@
 package com.matjip.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -69,7 +70,7 @@ public class RestController {
 
 	@GetMapping("/detail")
 	public String restDetail(@RequestParam("rs_idx") int rs_idx,
-													 @RequestParam("page") int page, 
+													 @RequestParam(value="page", defaultValue="1") int page, 
 													 @RequestParam(value="revPage", defaultValue="1") int revPage,
 													 @ModelAttribute("loggedUserInfo") UserBean loggedUserInfo,
 												   HttpServletRequest request,
@@ -93,6 +94,7 @@ public class RestController {
 		model.addAttribute("sid", sid);
 		
 		List<ReviewBean> reviewList = reviewService.reviewByResId(rs_idx, revPage);
+		
 		model.addAttribute("reviewList", reviewList);
 		
 		PageBean revPageBean = reviewService.getReviewCntByResId(rs_idx, revPage);

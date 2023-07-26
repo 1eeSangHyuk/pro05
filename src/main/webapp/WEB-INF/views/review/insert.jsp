@@ -37,7 +37,7 @@
 								<form:errors path="rev_title" style="color:red;" /><br>
 								
 								<form:label path="rev_score">점수</form:label>
-								<form:input type="number" path="rev_score" class="form-control"/>
+								<form:input type="number" path="rev_score" class="form-control" min="1" max="5" />
 								<form:errors path="rev_score" style="color:red;" /><br>
 								
 								<!-- accept="image/*  :  이미지 파일 확장자는 전부 첨부 가능 -->

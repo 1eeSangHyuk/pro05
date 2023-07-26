@@ -3619,8 +3619,8 @@ textarea.form-control-lg {
 }
 
 .nav-link {
-  --bs-nav-link-color: var(--bs-link-color);
-  --bs-nav-link-hover-color: var(--bs-link-hover-color);
+  --bs-nav-link-color: var(--bs-link-hover-color);
+  --bs-nav-link-hover-color: var(--bs-link-color);
   --bs-nav-link-disabled-color: #dee2e6;	
   display: block;
   padding: var(--bs-nav-link-padding-y) var(--bs-nav-link-padding-x);
@@ -7291,7 +7291,7 @@ textarea.form-control-lg {
 }
 
 .w-auto {
-  width: auto !important;
+  width: max-content; !important;
 }
 
 .mw-100 {
@@ -7802,6 +7802,7 @@ textarea.form-control-lg {
 .py-4 {
   padding-top: 1.5rem !important;
   padding-bottom: 1.5rem !important;
+  bottom: 0;
 }
 
 .py-5 {
@@ -8005,6 +8006,7 @@ textarea.form-control-lg {
 
 .lh-lg {
   line-height: 2 !important;
+  color: tan;
 }
 
 .text-start {

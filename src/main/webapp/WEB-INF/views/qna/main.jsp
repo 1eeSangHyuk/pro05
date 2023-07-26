@@ -39,7 +39,7 @@
 						<th class="text-center d-none d-md-table-cell">작성날짜</th>
 					</tr>
 				</thead>
-				<!-- <tbody>
+				<tbody>
 					<c:forEach var="qnaBean" items="${qnaList }">						
 						<tr>							
 							<c:if test="${qnaBean.lev==1}">
@@ -51,21 +51,8 @@
 							</c:if>									
 						</tr>
 					</c:forEach>					
-				</tbody>
-				 -->
-				 <tbody>
-					<c:forEach var="qnaBean" items="${parnoCntList }">						
-						<tr>							
-							<c:if test="${qnaBean.lev==1}">
-								<td class="text-center d-none d-md-table-cell">${qnaBean.qna_idx }</td>															
-								<td><a href="${root }/qna/detail?qna_idx=${qnaBean.qna_idx }&page=${page}">${qnaBean.qna_title }</a></td>					
-								<td class="text-center d-none d-md-table-cell">${qnaBean.qna_id }</td>
-								<td class="text-center d-none d-md-table-cell">${qnaBean.reply_cnt }</td>
-								<td class="text-center d-none d-md-table-cell">${qnaBean.qna_resdate }</td>	
-							</c:if>									
-						</tr>
-					</c:forEach>					
-				</tbody>
+				</tbody>				
+				 
 			</table>			
 			<div class="d-none d-md-block">
 				<ul class="pagination justify-content-center">

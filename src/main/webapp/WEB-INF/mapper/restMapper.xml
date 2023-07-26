@@ -11,7 +11,8 @@
 			FROM restaurant RS, food F, region R 
 			where F.food_cate=RS.rs_food_cate and R.region_cate=RS.rs_region_cate		
 		]]>		
-	</select> 
+	</select>
+
 	
 		<!-- 맛집 상세보기 -->
  	<select id="getRestDetail" parameterType="java.lang.Integer" 
