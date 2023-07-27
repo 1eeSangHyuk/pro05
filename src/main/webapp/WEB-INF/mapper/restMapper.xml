@@ -4,17 +4,43 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace = "restaurant">
-	<!-- 게시글 리스트 가져오기 -->
+	<!-- 게시글 리스트 전체 가져오기 -->
  	<select id="getRestList" parameterType="java.lang.Integer" resultType="com.matjip.bean.RestBean">
 		<![CDATA[
 			SELECT RS.rs_idx, RS.rs_name, F.food_name, R.region_name 
 			FROM restaurant RS, food F, region R 
 			where F.food_cate=RS.rs_food_cate and R.region_cate=RS.rs_region_cate		
 		]]>		
-	</select>
-
+	</select> 
 	
-		<!-- 맛집 상세보기 -->
+	<!-- 게시글 리스트 지역별 가져오기 -->
+ 	<select id="getRestListRegion" parameterType="java.lang.String" resultType="com.matjip.bean.RestBean">
+		<![CDATA[
+			SELECT * FROM restaurant RS, food F, region R 
+			WHERE F.food_cate=RS.rs_food_cate and R.region_cate=RS.rs_region_cate
+			and rs_region_cate=#{rs_region_cate}
+		]]>		
+	</select> 
+	
+	<!-- 게시글 리스트 음식별 가져오기 -->
+ 	<select id="getRestListFood" parameterType="java.lang.String" resultType="com.matjip.bean.RestBean">
+		<![CDATA[
+			SELECT * FROM restaurant RS, food F, region R 
+			WHERE F.food_cate=RS.rs_food_cate and R.region_cate=RS.rs_region_cate
+			and rs_food_cate=#{rs_food_cate}
+		]]>		
+	</select> 
+		
+	<!-- 게시글 리스트 카테별 가져오기 -->
+ 	<select id="getRestListCate" parameterType="java.util.HashMap" resultType="com.matjip.bean.RestBean">
+		<![CDATA[
+			SELECT * FROM restaurant RS, food F, region R 
+			WHERE F.food_cate=RS.rs_food_cate and R.region_cate=RS.rs_region_cate
+			and rs_region_cate=#{rs_region_cate} and rs_food_cate=#{rs_food_cate}
+		]]>		
+	</select> 
+		
+	<!-- 맛집 상세보기 -->
  	<select id="getRestDetail" parameterType="java.lang.Integer" 
  								resultType="com.matjip.bean.RestBean">
 		<![CDATA[
@@ -65,31 +91,41 @@
 	<!-- 게시글 전체 개수 가져오기 -->
  	<select id="getRestCnt" parameterType="java.lang.Integer" resultType="java.lang.Integer">
 		<![CDATA[
-			SELECT COUNT(*) FROM restaurant	
+			SELECT COUNT(*) FROM restaurant
 		]]>		
 	</select>
 	
-	<!-- 상세페이지에서 삭제 버튼 눌렀을때 게시글 삭제하기 -->
- 	<delete id="deleteRestInfo" parameterType="java.lang.Integer">
+	<!-- 게시글 지역별 개수 가져오기 -->
+ 	<select id="getRestRegionCnt" parameterType="java.lang.String" resultType="java.lang.Integer">
 		<![CDATA[
-			
-			DELETE FROM restaurant WHERE rs_idx = #{rs_idx}
-				
+			SELECT COUNT(*) FROM restaurant	WHERE rs_region_cate=#{rs_region_cate}
 		]]>		
-	</delete> 	
-	
-	<!-- region table 불러오기 -->
-	<select id="getRegionTable" resultType="com.matjip.bean.RegionBean">
-		<![CDATA[
-			select * from region order by region_cate
-		]]>
 	</select>
 	
-	<!-- food table 불러오기 -->
-	<select id="getFoodTable" resultType="com.matjip.bean.FoodBean">
+	<!-- 게시글 음식별 개수 가져오기 -->
+ 	<select id="getRestFoodCnt" parameterType="java.lang.String" resultType="java.lang.Integer">
 		<![CDATA[
-			select * from food order by food_cate
-		]]>
+			SELECT COUNT(*) FROM restaurant	WHERE rs_food_cate=#{rs_food_cate}
+		]]>		
+	</select>
+	
+	<!-- 게시글 지역.음식별 개수 가져오기 -->
+ 	<select id="getRestCateCnt" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+		<![CDATA[
+			SELECT COUNT(*) FROM restaurant	WHERE rs_region_cate=#{rs_region_cate} AND rs_food_cate=#{rs_food_cate}
+		]]>		
+	</select>
+	
+	<select id="getRestTop3" resultType="com.matjip.bean.RestBean">
+	<![CDATA[
+		select * from(select r.rs_idx, rs.rs_name, rs.rs_content, rs.rs_addr, 
+					  round(avg(nvl(r.rev_score, 0)), 2) as average 
+					  from review r, restaurant rs 
+					  where r.rs_idx = rs.rs_idx 
+					  group by r.rs_idx, rs.rs_name, rs.rs_addr, rs.rs_content 
+					  order by average desc) 
+					  where rownum <= 3
+	]]>
 	</select>
 	
 </mapper>

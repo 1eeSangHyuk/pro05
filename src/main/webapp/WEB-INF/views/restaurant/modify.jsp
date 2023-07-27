@@ -17,6 +17,9 @@
 </head>
 <body>
 
+<!-- Header -->
+<c:import url="/WEB-INF/views/include/top_menu.jsp"></c:import>	
+
 <div class="container" style="margin-top:100px">
 	<div class="row">
 		<div class="col-sm-3"></div>
@@ -28,7 +31,7 @@
 						<input type="hidden" name="page" value="${page }"/>
 						<div class="form-group">
 							<form:label path="rs_name">이름</form:label>
-							<form:input path="rs_name" class="form-control" readonly="true"/>
+							<form:input path="rs_name" class="form-control"/>
 						</div>
 						<div class="form-group">
 							<form:label path="rs_region_cate">지역분류</form:label>
@@ -40,7 +43,6 @@
 							</form:select>
 							<%-- <form:input path="rs_region_cate" class="form-control"/> --%>
 							<input type="hidden" name="rs_idx" value="${modifyRestBean.rs_idx}">
-							<input type="hidden" name="rs_addr" value="${modifyRestBean.rs_addr}">
 						</div>
 						<div class="form-group">
 							<form:label path="rs_food_cate">음식분류</form:label>
@@ -51,7 +53,11 @@
 						</div>
 						<div class="form-group">
 							<form:label path="rs_phone">전화번호</form:label>
-							<form:input path="rs_phone" class="form-control" readonly="true"/>
+							<form:input path="rs_phone" class="form-control"/>
+						</div>
+						<div class="form-group">
+							<form:label path="rs_addr">주소</form:label>
+							<form:input path="rs_addr" class="form-control"/>
 						</div>
 						<div class="form-group">
 							<form:label path="rs_content">내용</form:label>
@@ -79,6 +85,12 @@
 	</div>
 </div>
 
+<!-- Footer-->
+<c:import url="/WEB-INF/views/include/bottom_menu.jsp"></c:import>	
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="./resources/js/scripts.js"></script>
 
 </body>
 </html>

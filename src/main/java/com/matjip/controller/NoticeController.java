@@ -42,15 +42,12 @@ public class NoticeController {
 		
 		// DB 로부터 받아온 게시글 리스트(ContentBean 객체들이 저장된 ArrayList 객체)를
 		// requestScope 에 contentList 라는 이름으로 올림
-		model.addAttribute("notiList", notiList);
+		model.addAttribute("notiList", notiList);				
 		
-		System.out.println(loginUserBean.user_name);
-		// System.out.println("notiList 1 :" + notiList);	
 		PageBean pageBean = noticeService.getNotiCnt(page);
 		model.addAttribute("pageBean", pageBean);
 		model.addAttribute("page", page);
 		
-		// System.out.println("notiList 2 :" + notiList);	
 		return "notice/main";
 	}
 	

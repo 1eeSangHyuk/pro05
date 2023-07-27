@@ -24,4 +24,7 @@ public class RestBean {
 	// region_cate
 	private String region_cate;
 	private String region_name;
+	
+	//	index에 노출할 평점
+	private double average;
 }

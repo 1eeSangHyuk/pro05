@@ -1,6 +1,6 @@
 package com.matjip.controller;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -51,8 +51,9 @@ public class RestController {
 	private FoodBean foodBean;
 
 	@GetMapping("/main")
-	public String restaurant(@RequestParam(value = "page", defaultValue = "1") int page, Model model) {
-		// 게시글 리스트 가져오기
+	public String restaurant(@RequestParam(value = "page", defaultValue = "1") int page,													
+							 Model model) {
+		// 게시글 리스트 전체 가져오기
 		List<RestBean> restList = restService.getRestList(page);
 
 		// DB 로부터 받아온 게시글 리스트(RestBean 객체들이 저장된 ArrayList 객체)를
@@ -63,18 +64,92 @@ public class RestController {
 		PageBean pageBean = restService.getRestCnt(page);
 		model.addAttribute("pageBean", pageBean);
 		model.addAttribute("page", page);
-
+	
 		// System.out.println("restList 컨트롤 :" + restList);
 		return "restaurant/main";
 	}
+	
+	@GetMapping("/restaurantRegion")
+	public String getRestListRegion(@RequestParam(value = "page", defaultValue = "1") int page,													
+								   @RequestParam("rs_region_cate") String rs_region_cate,								   
+								   Model model) {		
+		
+		
+		// 게시글 리스트 (지역별) 가져오기
+		List<RestBean> restList = restService.getRestListRegion(page, rs_region_cate);
+			
+		// DB 로부터 받아온 게시글 리스트(RestBean 객체들이 저장된 ArrayList 객체)를
+		// requestScope 에 restList 라는 이름으로 올림
+		model.addAttribute("restList", restList);
 
+		// System.out.println("restList :" + restList);
+		PageBean pageBean = restService.getRestRegionCnt(page, rs_region_cate);
+	
+		model.addAttribute("pageBean", pageBean);
+		model.addAttribute("page", page);
+		model.addAttribute("rs_region_cate", rs_region_cate);
+
+		return "restaurant/main";		
+	}
+	
+	@GetMapping("/restaurantFood")
+	public String getRestListFood(@RequestParam(value = "page", defaultValue = "1") int page,								
+								 @RequestParam("rs_food_cate") String rs_food_cate,
+								 Model model) {		
+		
+		// 게시글 리스트 (음식별)가져오기
+		List<RestBean> restList = restService.getRestListFood(page, rs_food_cate);
+
+		// DB 로부터 받아온 게시글 리스트(RestBean 객체들이 저장된 ArrayList 객체)를
+		// requestScope 에 restList 라는 이름으로 올림
+		model.addAttribute("restList", restList);
+
+		// System.out.println("restList :" + restList);
+		PageBean pageBean = restService.getRestFoodCnt(page, rs_food_cate);
+		model.addAttribute("pageBean", pageBean);
+		model.addAttribute("page", page);
+		model.addAttribute("rs_food_cate", rs_food_cate);
+			
+		return "restaurant/main";		
+	}
+	
+	@GetMapping("/restaurantCate")
+	public String getRestListCate(@RequestParam(value = "page", defaultValue = "1") int page,													
+								 @RequestParam("rs_region_cate") String rs_region_cate,
+								 @RequestParam("rs_food_cate") String rs_food_cate,
+								 Model model) {		
+		
+		// HashMap에 넣기
+		HashMap<String, String> cateMap = new HashMap<String, String>();
+
+		cateMap.put("rs_region_cate", rs_region_cate);
+		cateMap.put("rs_food_cate", rs_food_cate);				
+						
+		// 게시글 리스트 (지역.음식별) 가져오기
+		List<RestBean> restList = restService.getRestListCate(page, cateMap);
+
+		// DB 로부터 받아온 게시글 리스트(RestBean 객체들이 저장된 ArrayList 객체)를
+		// requestScope 에 restList 라는 이름으로 올림
+		model.addAttribute("restList", restList);
+		model.addAttribute("rs_region_cate", rs_region_cate);
+		model.addAttribute("rs_food_cate", rs_food_cate);				
+	
+		PageBean pageBean = restService.getRestCateCnt(page, cateMap);
+		model.addAttribute("pageBean", pageBean);
+		model.addAttribute("page", page);		
+		
+		System.out.println("카테 pageBean.getPageCnt() : " + pageBean.getPageCnt());	
+		
+		return "restaurant/main";	
+	}
+					
 	@GetMapping("/detail")
 	public String restDetail(@RequestParam("rs_idx") int rs_idx,
-													 @RequestParam(value="page", defaultValue="1") int page, 
-													 @RequestParam(value="revPage", defaultValue="1") int revPage,
-													 @ModelAttribute("loggedUserInfo") UserBean loggedUserInfo,
-												   HttpServletRequest request,
-													 Model model) {
+			 				 @RequestParam(value="page", defaultValue="1") int page, 
+							 @RequestParam(value="revPage", defaultValue="1") int revPage,
+							 @ModelAttribute("loggedUserInfo") UserBean loggedUserInfo,
+							 HttpServletRequest request,
+							 Model model) {
 		
 		model.addAttribute("rs_idx", rs_idx);
 
@@ -84,8 +159,8 @@ public class RestController {
 		restDetailBean.setFood_name(reviewService.foodCodeName(rs_idx));
 		model.addAttribute("restDetailBean", restDetailBean);
 
-		// SessionScope 에 있는 정보를 loginUserBean 에 넣기
-		model.addAttribute("loginUserBean", loginUserBean);
+		// SessionScope 에 있는 정보를 넣기
+		
 		model.addAttribute("page", page);
 
 		// 리뷰
@@ -94,7 +169,6 @@ public class RestController {
 		model.addAttribute("sid", sid);
 		
 		List<ReviewBean> reviewList = reviewService.reviewByResId(rs_idx, revPage);
-		
 		model.addAttribute("reviewList", reviewList);
 		
 		PageBean revPageBean = reviewService.getReviewCntByResId(rs_idx, revPage);
@@ -104,8 +178,8 @@ public class RestController {
 	}
 
 	@GetMapping("/write")
-	public String restWrite(@ModelAttribute("writeRestBean") RestBean writeRestBean, @RequestParam("page") int page,
-			Model model) {
+	public String restWrite(@ModelAttribute("writeRestBean") RestBean writeRestBean,
+							@RequestParam("page") int page, Model model) {
 
 		model.addAttribute("page", page);
 
@@ -114,8 +188,8 @@ public class RestController {
 
 	// BindingResult는 검증 오류가 발생할 경우 오류 내용을 보관하는 스프링 프레임워크에서 제공하는 객체
 	@PostMapping("/write_procedure")
-	public String writeProcedure(@Valid @ModelAttribute("writeRestBean") RestBean writeRestBean, BindingResult result,
-			Model model, @RequestParam("page") int page) {
+	public String writeProcedure(@Valid @ModelAttribute("writeRestBean") RestBean writeRestBean, 
+								 BindingResult result, Model model, @RequestParam("page") int page) {
 
 		model.addAttribute("page", page);
 		if (result.hasErrors()) {
@@ -132,7 +206,7 @@ public class RestController {
 
 	@GetMapping("/modify")
 	public String restModify(@RequestParam("rs_idx") int rs_idx, @RequestParam("page") int page,
-			@ModelAttribute("modifyRestBean") RestBean modifyRestBean, Model model) {
+							 @ModelAttribute("modifyRestBean") RestBean modifyRestBean, Model model) {
 
 		model.addAttribute("rs_idx", rs_idx);
 		model.addAttribute("page", page);
@@ -152,8 +226,8 @@ public class RestController {
 	}
 
 	@PostMapping("/modify_procedure")
-	public String modifyProcedure(@Valid @ModelAttribute("modifyRestBean") RestBean modifyRestBean, BindingResult result,
-			Model model, @RequestParam("page") int page) {
+	public String modifyProcedure(@Valid @ModelAttribute("modifyRestBean") RestBean modifyRestBean, 
+								  BindingResult result,	Model model, @RequestParam("page") int page) {
 
 		model.addAttribute("page", page);
 		if (result.hasErrors()) {
@@ -175,5 +249,4 @@ public class RestController {
 
 		return "restaurant/delete";
 	}
-
 }

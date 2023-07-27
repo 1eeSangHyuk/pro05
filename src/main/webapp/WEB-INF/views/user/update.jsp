@@ -17,6 +17,17 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="${root }resources/css/styles.css" rel="stylesheet" />
         <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    
+	<style>
+	.container-wrap {
+		margin-top: 120px;
+		position: relative;
+		min-height: 100%;
+	    padding-bottom: 250px;
+		bottom:0px;
+	}
+	</style>    
+    
     </head>
     <script>
       function resetUserIdExist(){	  
@@ -36,8 +47,9 @@
     <body>
         <!-- TOP MENU - Responsive navbar-->
         <c:import url="/WEB-INF/views/include/top_menu.jsp" />
+        
         <!-- Page Content-->
-        <div class="container px-4 px-lg-5">
+        <div class="container" style="margin-top:110px; height: 545px;">
             <!-- Heading Row-->
             <div class="row gx-4 gx-lg-5 align-items-center my-5">
                 <div class="col-lg-3"></div>

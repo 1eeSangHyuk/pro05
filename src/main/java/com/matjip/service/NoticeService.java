@@ -51,8 +51,7 @@ public class NoticeService{
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		return fileName;
-		
+		return fileName;		
 	}
 		
 	public void addNoti(NoticeBean writeNoticeBean) {
@@ -78,7 +77,7 @@ public class NoticeService{
 		// 작성자 인덱스번호(content_writer_idx) 에
 		// 현재 로그인 상태인 사람(UserBean("loginUserBean")) 의
 		// writeNoticeBean.setNoti_author(loginUserBean.getUser_id());
-		System.out.println("서비스 : "+writeNoticeBean.getNoti_author());
+	
 		// Service 에서 DAO(Repository) 에 있는 addContentInfo() 호출하기
 		noticeDAO.addNoti(writeNoticeBean);
 		
@@ -87,16 +86,15 @@ public class NoticeService{
 	// 게시글 리스트 가져오기
 	public List<NoticeBean> getNotiList(int page){
 
-//		page	pagination number
-//		1	->	0	(start)	<- (page - 1) * pageListcnt(10)
-//		2	->	10
-//		3	->	20
+  //		page	pagination number
+  //		1	->	0	(start)	<- (page - 1) * pageListcnt(10)
+  //		2	->	10
+  //		3	->	20
 		
 		int start = (page - 1) * pageListcnt;
 		
-		RowBounds rowBounds = new RowBounds(start, pageListcnt);
-		
-		// System.out.println(noticeDAO.getNotiList(rowBounds));	
+		RowBounds rowBounds = new RowBounds(start, pageListcnt);		
+	
 		return noticeDAO.getNotiList(rowBounds);
 	}
 	
@@ -137,9 +135,7 @@ public class NoticeService{
 		int notiCnt = noticeDAO.getNotiCnt();
 		
 		PageBean pageBean = new PageBean(notiCnt, currentP, pageListcnt, pagePaginationcnt);
-		
-		// System.out.println(pageListcnt);
+				
 		return pageBean;
 	}
-
 }

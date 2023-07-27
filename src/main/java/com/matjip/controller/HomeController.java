@@ -15,8 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.matjip.bean.RestBean;
-import com.matjip.service.MainService;
-
+import com.matjip.service.RestService;
 
 /**
  * Handles requests for the application home page.
@@ -25,7 +24,7 @@ import com.matjip.service.MainService;
 public class HomeController {
 	
 	@Autowired
-	private MainService mainService;
+	private RestService restService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 		
@@ -39,6 +38,11 @@ public class HomeController {
 		String formattedDate = dateFormat.format(date);
 		
 		model.addAttribute("serverTime", formattedDate);
+		
+		List<RestBean> restTop3List = new ArrayList<RestBean>();
+		restTop3List = restService.getRestTop3();
+		
+		model.addAttribute("restTop3List", restTop3List);
 		
 		return "index";
 	}

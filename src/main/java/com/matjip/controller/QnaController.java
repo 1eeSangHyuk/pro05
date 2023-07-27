@@ -43,12 +43,10 @@ public class QnaController {
 		// requestScope 에 contentList 라는 이름으로 올림
 		model.addAttribute("qnaList", qnaList);
 		
-		// System.out.println("notiList 1 :" + notiList);	
 		PageBean pageBean = qnaService.getQnaCnt(page);
 		model.addAttribute("pageBean", pageBean);
 		model.addAttribute("page", page);
 	
-		// System.out.println("notiList 2 :" + notiList);	
 		return "qna/main";
 	}
 	
@@ -57,23 +55,21 @@ public class QnaController {
 							@RequestParam("page") int page,	Model model){
 		
 		model.addAttribute("qna_idx", qna_idx);
-		
-		
-		
+				
 		// 게시글 리스트 가져오기
 		List<QnaBean> qnaReplyList = qnaService.getQnaReplyList(page);
 		
 		// DB 로부터 받아온 게시글 리스트(ContentBean 객체들이 저장된 ArrayList 객체)를
 		// requestScope 에 contentList 라는 이름으로 올림
-		model.addAttribute("qnaReplyList", qnaReplyList);	
-		
-		
+		model.addAttribute("qnaReplyList", qnaReplyList);		
+					
 		// 상세페이지에 출력할 데이터 가져오기
 		QnaBean qnaDetailBean = qnaService.getQnaDetail(qna_idx);
 		model.addAttribute("qnaDetailBean", qnaDetailBean);
 		
 		// SessionScope 에 있는 정보를 loginUserBean 에 넣기
-		model.addAttribute("loginUserBean", loginUserBean);
+		// model.addAttribute("loginUserBean", loginUserBean);
+		
 		model.addAttribute("page", page);
 		
 		return "qna/detail";
@@ -114,11 +110,11 @@ public class QnaController {
 		
 		model.addAttribute("page", page);
 		
-		QnaBean tmpreplyQnaBean = qnaService.getQnaDetail(qna_idx);		
+		QnaBean tmpreplyQnaBean = qnaService.getQnaDetail(qna_idx);				
 		
 		replyQnaBean.setLev((Integer)tmpreplyQnaBean.getLev()+1);
-		replyQnaBean.setParno(tmpreplyQnaBean.getQna_idx());	
-		
+		replyQnaBean.setParno(tmpreplyQnaBean.getParno());
+					
 		System.out.println("답변달기 : "+replyQnaBean);				
 		return "qna/qnaReply";
 	}
@@ -128,9 +124,9 @@ public class QnaController {
 	public String replyProcedure(@Valid @ModelAttribute("replyQnaBean") QnaBean replyQnaBean, 
 								 BindingResult result, Model model,
 								 @RequestParam("page") int page,
-								 @RequestParam("qna_idx") int qna_idx	
+								 @RequestParam("qna_idx") int qna_idx								
 								 ){
-		
+			
 		System.out.println("프로시져1 : "+replyQnaBean);
 		model.addAttribute("replyQnaBean", replyQnaBean);
 		
@@ -149,7 +145,7 @@ public class QnaController {
 			
 			QnaBean questionBean = qnaService.getQnaDetail(qna_idx);
 			qnaService.qnaReplyCntUp(questionBean);
-			
+						
 			return "qna/qnaReply_success";
 	}	
 	
@@ -199,21 +195,45 @@ public class QnaController {
 			return "qna/modify_success";
 	}
 	
-	//질문 삭제
+  //질문 삭제
 	@GetMapping("/delete")
 	public String qnaDelete(@RequestParam("qna_idx") int qna_idx,
-			  				@RequestParam("page") int page, Model model){
-				
-		// 상세페이지에 출력할 데이터 가져오기
-		QnaBean qnaDetailBean = qnaService.getQnaDetail(qna_idx);
-		model.addAttribute("qnaDetailBean", qnaDetailBean);
-		System.out.println("qnaDetailBean :"+ qnaDetailBean);
-				
-		qnaService.qnaReplyCntDown(qnaDetailBean);
+			  								  @RequestParam("page") int page, Model model){
+	
+	// 게시글 리스트 가져오기
+	List<QnaBean> qnaList = qnaService.getQnaList(page);	
 		
-		qnaService.deleteQna(qna_idx);	
-		model.addAttribute("page", page);
+	//DB 로부터 받아온 게시글 리스트(ContentBean 객체들이 저장된 ArrayList 객체)를
+	// requestScope 에 contentList 라는 이름으로 올림
+	model.addAttribute("qnaList", qnaList);
+		
+	
+	
+	// 상세페이지에 출력할 데이터 가져오기
+			QnaBean qnaDetailBean = qnaService.getQnaDetail(qna_idx);
+			model.addAttribute("qnaDetailBean", qnaDetailBean);			
+								
+			qnaService.deleteQna(qna_idx);	
+			model.addAttribute("qna_idx", qna_idx);
+			model.addAttribute("page", page);
 		
 		return "qna/delete";
+	}	
+		
+	// 답변 삭제
+	@GetMapping("/deleteReply")
+	public String replyDelete(@RequestParam("qna_idx") int qna_idx,
+			  								    @RequestParam("page") int page, Model model){
+				
+	// 상세페이지에 출력할(부모글=질문글) 데이터 가져오기
+			QnaBean qnaDetailBean = qnaService.getQnaDetail(qna_idx);
+			model.addAttribute("qnaDetailBean", qnaDetailBean);
+							
+			qnaService.qnaReplyCntDown(qnaDetailBean);			
+			qnaService.deleteReply(qna_idx);	
+			
+			model.addAttribute("page", page);
+		
+		return "qna/deleteReply";
 	}	
 }
