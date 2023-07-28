@@ -14,7 +14,7 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
-	<!-- <bean class="kr.co.tjoeun.bean.UserBean" id="loginUserBean" scope="session" /><bean class="kr.co.tjoeun.bean.UserBean" id="loginUserBean" scope="session" /> -->
+	<!-- <bean class="com.matjip.bean.UserBean" id="loginUserBean" scope="session" /> -->
 	<context:annotation-config></context:annotation-config>
 
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">

@@ -20,7 +20,7 @@
 	<select id="checkExistUser" parameterType="com.matjip.bean.UserBean" 
 	                                 resultType="com.matjip.bean.UserBean" >
 		<![CDATA[
-	         SELECT * FROM user_tbl 
+	         SELECT user_id, user_name FROM user_tbl 
 	  	     WHERE user_id = #{user_id} and user_pw = #{user_pw}
 	    ]]>  
 	</select> 

@@ -86,14 +86,13 @@
 			<mapping path="/user/delete"/>
 			<mapping path="/restaurant/**"/>
 			<mapping path="/review/**"/>
-			<mapping path="/notice/**"/>
 			<mapping path="/qna/**"/>
 			<exclude-mapping path="/restaurant/main"/>
 			<exclude-mapping path="/restaurant/restaurantCate"/>
 			<exclude-mapping path="/restaurant/restaurantRegion"/>
 			<exclude-mapping path="/restaurant/restaurantFood"/>
-			<exclude-mapping path="/notice/main"/>
 			<exclude-mapping path="/qna/main"/>
+			<exclude-mapping path="/qna/detail"/>
 			<beans:bean class="com.matjip.interceptor.UserInterceptor" />
 		</interceptor>
 		<interceptor>

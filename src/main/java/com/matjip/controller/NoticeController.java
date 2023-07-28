@@ -29,10 +29,6 @@ public class NoticeController {
 	@Autowired
 	private NoticeService noticeService;
 	
-	@Resource(name = "loginUserBean")
-	@Lazy
-	private UserBean loginUserBean;
-	
 	@GetMapping("/main")
 	public String notice(@RequestParam(value="page", defaultValue = "1") int page,
 						 Model model){
@@ -61,8 +57,6 @@ public class NoticeController {
 		NoticeBean noticeDetailBean = noticeService.getNotiDetail(noti_idx);
 		model.addAttribute("noticeDetailBean", noticeDetailBean);
 		
-		// SessionScope 에 있는 정보를 loginUserBean 에 넣기
-		model.addAttribute("loginUserBean", loginUserBean);
 		model.addAttribute("page", page);
 		
 		return "notice/detail";

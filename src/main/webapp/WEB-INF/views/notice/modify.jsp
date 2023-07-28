@@ -17,29 +17,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 </head>
-	<style>
-	.container-wrap {
-		margin-top: 120px;
-		position: relative;
-		min-height: 100%;
-	    padding-bottom: 250px;
-		bottom:0px;
-	}
-	
-	.shadow {
-		width: 1000px;
-		text-align: center;
-		display: flex;
-		margin: 0 auto;
-	}
-	</style>
-
 <body>
 
 <!-- Header -->
 <c:import url="/WEB-INF/views/include/top_menu.jsp"></c:import>	
 
-	<div class="container" style="margin-top:100px; height: auto;">
+<div class="container" style="margin-top:100px">
 	<div class="row">
 		<div class="col-sm-3"></div>
 		<div class="col-sm-6">
@@ -77,7 +60,7 @@
 						<div class="form-group">
 							<div class="text-right">
 								<form:button class="btn btn-primary">수정완료</form:button>
-								<a href="${root}/notice/detail?notice_idx=${notice_idx}&page=${page}" class="btn btn-info">취소</a>
+								<a href="${root}/notice/detail?noti_idx=${modifyNoticeBean.noti_idx}&page=${page}" class="btn btn-info">취소</a>
 							</div>
 						</div>
 					</form:form>

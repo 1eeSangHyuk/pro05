@@ -25,6 +25,7 @@
 	    <!-- Custom styles for this template -->
 	    <!--<link href="${pageContext.request.contextPath}/resources/css/product.css" rel="stylesheet">-->
     	<link href="${pageContext.request.contextPath}/resources/css/carousel.css" rel="stylesheet">
+    	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
 
 	<style>
       .bd-placeholder-img {
@@ -37,8 +38,12 @@
       }
 	  
 	  .featurette {
-	   text-align: center;
 	   padding-bottom: 50px;
+	  }
+	  
+	  img {
+	  border-radius: 7px;
+	  justify-content:center;
 	  }
 	  
       @media (min-width: 768px) {
@@ -100,96 +105,77 @@
 
     <!-- Three columns of text below the carousel -->
     <div class="row">
-    <h2 class="featurette-heading fst-italic lh-lg">BEST Jejumatjip TOP311</h2>
+    <h2 class="featurette-heading fst-italic lh-lg">BEST Jejumatjip TOP3</h2>
     <c:forEach items="${restTop3List }" var="restTop3List">
-    	<div class="col-lg-4">
-        <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 140x140"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
-        <h2 style="margin-top: 10px;" >${restTop3List.rs_name }</h2>
+       <div class="col-lg-4">
+        <img src="${root}resources/upload/${restTop3List.rs_file}" width="300" height="200">
+        <h3 style="margin-top: 20px;" >${restTop3List.rs_name }</h3>
         <p>${restTop3List.rs_content }</p>
-        <p><a class="btn btn-secondary" href="${root}restaurant/detail?rs_idx=${restTop3List.rs_idx}" role="button">View details &raquo;</a></p>
+        <p><a class="btn btn-light" href="${root}restaurant/detail?rs_idx=${restTop3List.rs_idx}" role="button">View details &raquo;</a></p>
       </div><!-- /.col-lg-4 -->
     </c:forEach>
     </div><!-- /.row -->
-	</div>
+   </div>
+		
 
     <!-- START THE FEATURETTES -->
 	<main>
-		
-	<c:forEach items="${restBeanList2 }" var="list" varStatus="status">
-	<hr class="featurette-divider">
-	<div class="row featurette">
-		<div class="col-md-7">
-			<h2 class="featurette-heading fw-normal lh-1">${list[0].region_name }시 ${list[0].food_name }점 최신 리스트</h2>
-		<table class="table table-hover" id='restList'>
-			<thead>
-				<div class="list-group w-auto">
-				<c:forEach var="restBean" items="${list }">
+	    <c:forEach items="${restBeanList2 }" var="list" varStatus="status">
+	   <hr class="featurette-divider">
+	   <div class="row featurette">
+	         <h3 class="featurette-heading fw-normal lh-1">${list[0].region_name }시 ${list[0].food_name }점 최신 리스트</h3>
+	      <div class="col-md-6">
+	      <table class="table table-hover" id='restList'>
+	         <thead>
+	            <div class="list-group w-auto">
+	            <c:forEach var="restBean" items="${list }">
 					<a href="${root}restaurant/detail?rs_idx=${restBean.rs_idx}" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
-						<img src="https://github.com/twbs.png" alt="twbs" width="32" height="32" class="rounded-circle flex-shrink-0">
-						<div class="d-flex gap-2 w-100 justify-content-between">
-							<div>
-								<h6 class="mb-0">${restBean.rs_name }</h6>
-								<p class="mb-0 opacity-75">${restBean.rs_addr }</p>
-								<p class="mb-0 opacity-75">${restBean.rs_phone }</p>
-							</div>
-							<small class="opacity-50 text-nowrap">now</small>
-						</div>
-					</a>
-				</c:forEach>
-				</div>
-			</thead>
-			
-			<tbody>
-				<c:forEach var="restBean" items="${list }">		
-					<tr>
-						<td><a href="${root}restaurant/detail?rs_idx=${restBean.rs_idx}">${restBean.rs_name }</a></td>		
-					</tr>	
-				</c:forEach>			
-			</tbody>
-		</table>			
-
-		</div>
-		<div class="col-md-5">
-		<c:choose>
-			<c:when test="${list[0].rs_food_cate eq '01' && list[0].rs_region_cate eq '01' }">
-				<img src="${root }resources/images/sub3.jpg" class="d-block" alt="${list[0].region_name }시 ${list[0].food_name }점 IMG">
-			</c:when>
-			<c:when test="${list[0].rs_food_cate eq '01' && list[0].rs_region_cate eq '02' }">
-				<img src="${root }resources/images/sub1.jpg" class="d-block" alt="${list[0].region_name }시 ${list[0].food_name }점 IMG">
-			</c:when>
-			<c:when test="${list[0].rs_food_cate eq '02' && list[0].rs_region_cate eq '01' }">
-				<img src="${root }resources/images/sub4.jpg" class="d-block" alt="${list[0].region_name }시 ${list[0].food_name }점 IMG">
-			</c:when>
-			<c:when test="${list[0].rs_food_cate eq '02' && list[0].rs_region_cate eq '02' }">
-				<img src="${root }resources/images/sub2.jpg" class="d-block" alt="${list[0].region_name }시 ${list[0].food_name }점 IMG">
-			</c:when>
-		</c:choose>
-		</div>
-	</div>
+	                  <i class="bi bi-house-heart"></i>
+	                  <div class="d-flex gap-2 w-100 justify-content-between">
+	                     <div>
+	                        <h6 class="mb-0">${restBean.rs_name }</h6>
+	                        <p class="mb-0 opacity-75">${restBean.rs_addr }</p>
+	                        <p class="mb-0 opacity-75">${restBean.rs_phone }</p>
+	                     </div>
+	                  </div>
+	               </a>
+	            </c:forEach>
+	            </div>
+	         </thead>
+	      </table>         
 	
-	<c:if test="${status.last }">
-		<hr class="featurette-divider">
-	</c:if>
-	</c:forEach>
-	
-</main> 
-
+	      </div>
+	      <div class="col-md-6">
+	      <c:choose>
+	         <c:when test="${list[0].rs_food_cate eq '01' && list[0].rs_region_cate eq '01' }">
+	            <img src="${root }resources/images/sub3.jpg" class="d-block" alt="${list[0].region_name }시 ${list[0].food_name }점 IMG">
+	         </c:when>
+	         <c:when test="${list[0].rs_food_cate eq '01' && list[0].rs_region_cate eq '02' }">
+	            <img src="${root }resources/images/sub1.jpg" class="d-block" alt="${list[0].region_name }시 ${list[0].food_name }점 IMG">
+	         </c:when>
+	         <c:when test="${list[0].rs_food_cate eq '02' && list[0].rs_region_cate eq '01' }">
+	            <img src="${root }resources/images/sub4.jpg" class="d-block" alt="${list[0].region_name }시 ${list[0].food_name }점 IMG">
+	         </c:when>
+	         <c:when test="${list[0].rs_food_cate eq '02' && list[0].rs_region_cate eq '02' }">
+	            <img src="${root }resources/images/sub2.jpg" class="d-block" alt="${list[0].region_name }시 ${list[0].food_name }점 IMG">
+	         </c:when>
+	      </c:choose>
+	      </div>
+	   </div>
+	   
+	   <c:if test="${status.last }">
+	   </c:if>
+	   </c:forEach>
+	     
         <!-- FOOTER --> 
         <c:import url="/WEB-INF/views/include/bottom_menu.jsp" />
- 	      
+ 		</main>      
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
                 
         <!-- Core theme JS-->
         <script src="${pageContext.request.contextPath}/resources/js/scripts.js"></script>
     	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-		
-		<!-- Review list -->
-			<script>
-			function linked(a){
-				location.href = "/restaurant/detail?rs_idx="+a;
-			}
-			</script>
-			
+	
     </body>
 </html>

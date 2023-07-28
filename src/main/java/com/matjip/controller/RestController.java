@@ -147,9 +147,7 @@ public class RestController {
 	public String restDetail(@RequestParam("rs_idx") int rs_idx,
 			 				 @RequestParam(value="page", defaultValue="1") int page, 
 							 @RequestParam(value="revPage", defaultValue="1") int revPage,
-							 @ModelAttribute("loggedUserInfo") UserBean loggedUserInfo,
-							 HttpServletRequest request,
-							 Model model) {
+							 HttpServletRequest request, Model model) {
 		
 		model.addAttribute("rs_idx", rs_idx);
 

@@ -28,6 +28,7 @@
 				<div class="card shadow">
 					<div class="card-body">
 						<div class="form-group">
+							<h3 class="text-center card-title"><strong>JejuMatjip My Review Insert</strong></h3>
 							<form:form action="/review/insertReview" method="post" modelAttribute="reviewBean" enctype="multipart/form-data" >
 								<%-- <form:hidden path="rs_idx"/> --%>
 								<input type="hidden" id="rs_idx" name="rs_idx" value="${rs_idx }">
@@ -37,7 +38,7 @@
 								<form:errors path="rev_title" style="color:red;" /><br>
 								
 								<form:label path="rev_score">점수</form:label>
-								<form:input type="number" path="rev_score" class="form-control" min="1" max="5" />
+								<form:input type="number" path="rev_score" class="form-control"/>
 								<form:errors path="rev_score" style="color:red;" /><br>
 								
 								<!-- accept="image/*  :  이미지 파일 확장자는 전부 첨부 가능 -->
@@ -52,9 +53,9 @@
 								
 								<div class="form-group">
 									<div class="text-right">
-										<form:button type="submit" class="btn btn-info">리뷰 등록</form:button>
+										<form:button type="submit" class="btn btn-light">리뷰 등록</form:button>
 										<form:button type="reset" class="btn btn-danger">초기화</form:button>
-										<a href="${root }/restaurant/detail?rs_idx=${reviewBean.rs_idx }&page=${page }" class="btn btn-info">뒤로가기</a>
+										<a href="${root }/restaurant/detail?rs_idx=${reviewBean.rs_idx }&page=${page }" class="btn btn-dark">뒤로가기</a>
 									</div>
 								</div>
 							</form:form>

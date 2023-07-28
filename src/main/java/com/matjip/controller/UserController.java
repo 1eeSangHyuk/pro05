@@ -1,10 +1,12 @@
 package com.matjip.controller;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,6 +25,10 @@ public class UserController {
 	
 	@Autowired
 	UserService userService;
+	
+//	@Resource(name="loginUserBean")
+//	@Lazy
+//	private UserBean loginUserBean;
 
 	@GetMapping("/login")
 	public String loginPageLoader(@ModelAttribute("loginUserInfo") UserBean userbean,
@@ -74,7 +80,7 @@ public class UserController {
 	}
 	
 	@PostMapping("/join_procedure")
-	public String joinProcedure(@ModelAttribute("joinUserBean") UserBean joinUserBean,
+	public String joinProcedure(@Valid @ModelAttribute("joinUserBean") UserBean joinUserBean,
 								Model model, BindingResult result) {
 		
 		
@@ -96,7 +102,7 @@ public class UserController {
 		String sid = (String) session.getAttribute("sid");
 		
 		loggedUserInfo = userService.getLoggedUserInfo(sid);
-		System.out.println(loggedUserInfo.getUser_pw());
+		// System.out.println(loggedUserInfo.getUser_pw());
 		loggedUserInfo.setUser_pw2(loggedUserInfo.getUser_pw());
 		
 		model.addAttribute("loggedUserInfo", loggedUserInfo);
@@ -105,10 +111,12 @@ public class UserController {
 	}
 	
 	@PostMapping("/update_procedure")
-	public String updateProcedure(@ModelAttribute("loggedUserInfo") UserBean loggedUserInfo,
-								  HttpServletRequest request, BindingResult result) {
+	public String updateProcedure(@Valid @ModelAttribute("loggedUserInfo") UserBean loggedUserInfo, BindingResult result,
+								  HttpServletRequest request) {
 		
 		if(result.hasErrors()) {
+			HttpSession session = request.getSession();
+			String sid = (String) session.getAttribute("sid");
 			return "user/modify";
 		}
 		

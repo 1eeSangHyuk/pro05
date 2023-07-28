@@ -192,8 +192,9 @@
 				</ul>
 			</div>			
 			<div class="text-right">
-				<a href="${root }/" class="btn btn-primary">메인으로</a>
-				<a href="${root}/restaurant/write?&page=${page}" class="btn btn-primary">글쓰기</a>
+				<c:if test="${sid.equals('admin')}">
+               	<a href="${root}/restaurant/write?&page=${page}" class="btn btn-primary">글쓰기</a>
+            </c:if>
 			</div>
 			
 		</div>
@@ -202,8 +203,8 @@
 
 <script>
 function button_find(){
-   // console.log(rs_region_cate.value);
-   // console.log(rs_food_cate.value);   
+   console.log(rs_region_cate.value);
+   console.log(rs_food_cate.value);   
    
    if(rs_region_cate.value=="" && rs_food_cate.value!=""){
 	
