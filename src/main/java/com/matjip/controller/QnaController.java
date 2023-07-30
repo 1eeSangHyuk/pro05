@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.matjip.bean.PageBean;
 import com.matjip.bean.QnaBean;
@@ -52,6 +53,7 @@ public class QnaController {
                     @RequestParam("page") int page,   Model model){
      
      model.addAttribute("qna_idx", qna_idx);
+     
            
      // 게시글 리스트 가져오기
      List<QnaBean> qnaReplyList = qnaService.getQnaReplyList(page);
@@ -62,12 +64,16 @@ public class QnaController {
               
      // 상세페이지에 출력할 데이터 가져오기
      QnaBean qnaDetailBean = qnaService.getQnaDetail(qna_idx);
+     //System.out.println(qnaDetailBean);
      model.addAttribute("qnaDetailBean", qnaDetailBean);
      
      // SessionScope 에 있는 정보를 loginUserBean 에 넣기
      // model.addAttribute("loginUserBean", loginUserBean);
      
      model.addAttribute("page", page);
+     
+     int cnt = qnaService.getReplyCnt(qna_idx) +1;
+	 replyQnaBean.setQna_title("질문글"+qnaDetailBean.getQna_idx()+" 의 답변글"+cnt);
      
      return "qna/detail";
   }
@@ -121,27 +127,35 @@ public class QnaController {
 	public String replyProcedure(@Valid @ModelAttribute("replyQnaBean") QnaBean replyQnaBean, 
 								 BindingResult result, Model model,
 								 @RequestParam("page") int page,
-								 @RequestParam("qna_idx") int qna_idx								
+								 @RequestParam("qna_idx") int qna_idx
 								 ){
 			
-		System.out.println("프로시져1 : "+replyQnaBean);
-		model.addAttribute("replyQnaBean", replyQnaBean);
+		//System.out.println("프로시져1 : "+replyQnaBean);
+		//model.addAttribute("replyQnaBean", replyQnaBean);
 		
-		System.out.println("프로시져2 : "+replyQnaBean);
-		model.addAttribute("page", page);
+		//System.out.println("프로시져2 : "+replyQnaBean);
+		
 		
 		if(result.hasErrors()){
-			System.out.println("에러O");
-			System.out.println(result.getAllErrors());
+			model.addAttribute("qna_idx", qna_idx);
+		    List<QnaBean> qnaReplyList = qnaService.getQnaReplyList(page);
+		    model.addAttribute("qnaReplyList", qnaReplyList);
+		    QnaBean qnaDetailBean = qnaService.getQnaDetail(qna_idx);
+		    model.addAttribute("qnaDetailBean", qnaDetailBean);
+		    model.addAttribute("page", page);
+		    int cnt = qnaService.getReplyCnt(qna_idx) + 1;
+			replyQnaBean.setQna_title("질문글"+qnaDetailBean.getQna_idx()+" 의 답변글"+cnt);
 			
-			return "qna/qnaReply";
+//			return "qna/qnaReply";
+			return "qna/detail";
 		}
+		
+			model.addAttribute("page", page);
+			qnaService.addQnaReply(replyQnaBean, qna_idx);
+			//System.out.println("에러X");
 			
-			qnaService.addQnaReply(replyQnaBean);
-			System.out.println("에러X");
-			
-			QnaBean questionBean = qnaService.getQnaDetail(qna_idx);
-			qnaService.qnaReplyCntUp(questionBean);
+//			QnaBean questionBean = qnaService.getQnaDetail(qna_idx);
+//			qnaService.qnaReplyCntUp(questionBean);
 						
 			return "qna/qnaReply_success";
 	}	

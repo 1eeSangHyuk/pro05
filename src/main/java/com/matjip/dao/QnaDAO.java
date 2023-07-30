@@ -78,8 +78,11 @@ public class QnaDAO {
 	
 	// 게시글 전체 개수 가져오기
 	public int getQnaCnt() {
-		
 		return sqlSessionTemplate.selectOne("qna.getQnaCnt");
+	}
+	
+	public int getReplyCnt(int qna_idx) {
+		return sqlSessionTemplate.selectOne("qna.getReplyCnt", qna_idx);
 	}
 	
 }

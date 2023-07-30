@@ -47,9 +47,12 @@ public class QnaService {
 	}
 	
 	// 답변 추가하기
-	public void addQnaReply(QnaBean replyQnaBean) {
+	public void addQnaReply(QnaBean replyQnaBean, int qna_idx) {
+		qnaDAO.addQnaReply(replyQnaBean);	
 		
-		qnaDAO.addQnaReply(replyQnaBean);		
+		//답글수 카운트업
+		QnaBean questionBean = qnaDAO.getQnaDetail(qna_idx);
+		qnaDAO.qnaReplyCntUp(questionBean);
 	}
 	
 	// 답변 달기 성공시 답글수 카운트업!
@@ -123,5 +126,9 @@ public class QnaService {
 		PageBean pageBean = new PageBean(qnaCnt, currentP, pageListcnt, pagePaginationcnt);
 		
 		return pageBean;
-	}	
+	}
+	
+	public int getReplyCnt(int qna_idx) {
+		return qnaDAO.getReplyCnt(qna_idx);
+	}
 }

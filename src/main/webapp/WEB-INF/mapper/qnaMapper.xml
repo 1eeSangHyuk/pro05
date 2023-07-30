@@ -43,8 +43,8 @@
       
       <![CDATA[
          
-         Insert INTO qna(qna_idx, qna_content, qna_id, qna_resdate, lev, parno, reply_cnt)
-         VALUES(#{qna_idx}, #{qna_content}, #{qna_id}, sysdate, 2, #{parno}, default)
+         Insert INTO qna(qna_idx, qna_title, qna_content, qna_id, qna_resdate, lev, parno, reply_cnt)
+         VALUES(#{qna_idx}, #{qna_title},  #{qna_content}, #{qna_id}, sysdate, 2, #{parno}, default)
             
       ]]>   
          
@@ -149,5 +149,11 @@
 				
 		]]>		
 	</select> 	
+	
+	<select id="getReplyCnt" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		<![CDATA[
+			select reply_cnt from qna where qna_idx=${qna_idx}
+		]]>
+	</select>
 	 
 </mapper>
