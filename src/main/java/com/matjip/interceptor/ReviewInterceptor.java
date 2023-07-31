@@ -25,7 +25,8 @@ public class ReviewInterceptor implements HandlerInterceptor{
 		int rev_idx = Integer.parseInt(request.getParameter("rev_idx"));
 		ReviewBean tmpReviewBean = reviewService.reviewByRevIdx(rev_idx);
 		String sid = request.getSession().getAttribute("sid").toString();
-		if(!tmpReviewBean.getRev_id().equals(sid) || sid.equals("admin")) {
+		// 리뷰 작성자 + 관리자 제외 접근제한 XOR 연산
+		if(!(!tmpReviewBean.getRev_id().equals(sid) ^ !sid.equals("admin"))) {
 			response.sendRedirect(request.getContextPath()+"/review/invalidUser");
 			return false;
 		}
