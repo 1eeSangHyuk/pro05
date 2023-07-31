@@ -47,6 +47,7 @@
 						<h3 class="text-center card-title"><strong>맛집 리스트 상세수정</strong></h3>
 							<form:label path="rs_name">이름</form:label>
 							<form:input path="rs_name" class="form-control"/>
+							<form:errors path="rs_name" style="color:red;" /><br>
 						</div>
 						<div class="form-group">
 							<form:label path="rs_region_cate">지역분류</form:label>
@@ -77,6 +78,7 @@
 						<div class="form-group">
 							<form:label path="rs_content">내용</form:label>
 							<form:textarea path="rs_content" class="form-control" rows="10" style="resize:none"/>
+							<form:errors path="rs_content" style="color:red;" /><br>
 						</div>
 						<div class="form-group">
 							<form:label path="rs_file">첨부 이미지</form:label>

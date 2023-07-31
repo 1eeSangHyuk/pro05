@@ -94,10 +94,10 @@
 					<div class="form-group">
 						<div class="text-right">
 							<a href="${root}/restaurant/main?page=${page}" class="btn btn-secondary">목록보기</a>
-							<c:if test="${sid == 'admin'}">
-		                    	<a href="${root}/restaurant/modify?rs_idx=${rs_idx}&page=${page}" class="btn btn-warning">수정하기</a>
-		                    	<a href="${root}/restaurant/delete?rs_idx=${rs_idx}&page=${page}" class="btn btn-danger">삭제하기</a>
-		                    </c:if>
+							<c:if test="${sid.equals('admin')}">
+              	<a href="${root}/restaurant/modify?rs_idx=${rs_idx}&page=${page}" class="btn btn-warning">수정하기</a>
+              	<a href="${root}/restaurant/delete?rs_idx=${rs_idx}&page=${page}" class="btn btn-danger">삭제하기</a>
+              </c:if>
 							<%-- <c:if test="${loginUserBean.user_id == noticeDetailBean.user_id }"></c:if> --%>
 						</div>
 					</div>					
@@ -109,49 +109,45 @@
 				<div class="card-body">
 					<h3 style="margin-bottom: 30px;"><strong>${restDetailBean.rs_name } 의 후기</strong></h3>
 					<table class="table table-hover" id='맛집리스트 상세 후기' style="width=100%">
-						<tbody>
+						<thead>
 							<tr class="exline" style="border-bottom: 2px solid #ddd;">
-							<th class="text-center d-none d-md-table-cell">제목</th>
-							<th class="text-center d-none d-md-table-cell">별점</th>
-							<th class="text-center d-none d-md-table-cell">리뷰어</th>
-							<th class="text-center d-none d-md-table-cell">이미지</th>
-							<th class="text-center d-none d-md-table-cell">내용</th>
-							<th class="text-center d-none d-md-table-cell">작성일</th>
-							<th class="text-center d-none d-md-table-cell"></th>
+								<th class="text-center d-none d-md-table-cell">제목</th>
+								<th class="text-center d-none d-md-table-cell">별점</th>
+								<th class="text-center d-none d-md-table-cell">리뷰어</th>
+								<th class="text-center d-none d-md-table-cell">작성일</th>
+								<th class="text-center d-none d-md-table-cell"></th>
 							<tr>
-							<c:forEach items="${reviewList }" var="review" varStatus="status"></th>
-							<th class="text-center d-none d-md-table-cell">${review.rev_title }</th><!-- 제목 -->
-							<th>
-							<!-- 별점 -->
-							<h7>
-								<c:forEach begin="1" end="${review.rev_score }" step="1">★</c:forEach>
-							</h7>
-							</th>
-							<th class="text-center d-none d-md-table-cell">${review.rev_id }</th><!-- 리뷰어 -->
-							<th class="text-center d-none d-md-table-cell"><c:if test="${!empty review.rev_file }"><!-- 이미지 -->
-								<img src="${root }/resources/upload/${review.rev_file }" alt="${review.rev_file }" width="30%" id="img1" onclick="imgPop('${review.rev_file }')">
-							</c:if></th>
-							<th class="text-center d-none d-md-table-cell h6">${review.rev_content }</th><!-- 후기내용 -->
-							<th class="text-center w-25 h6">${review.rev_regdate }</th><!-- 작성일 -->
-							<th class="text-right">
-							<!-- 수정 삭제 -->
-								<c:if test="${review.rev_id.equals(sid) }">
-									<a href="/review/updateReview?rev_idx=${review.rev_idx }&page=${page}&revPage=${revPageBean.currentP}" class="btn btn-outline-danger" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">수정</a>
-									<a href="/review/deleteReview?rev_idx=${review.rev_idx }&rs_idx=${review.rs_idx }&page=${page}&revPage=${revPageBean.currentP}" class="btn btn-outline-danger" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">삭제</a>
+						</thead>
+						<tbody>
+							<c:forEach items="${reviewList }" var="review" varStatus="status">
+							<tr>
+								<th class="text-center d-none d-md-table-cell">
+									<a href="${root }/review/detail?rev_idx=${review.rev_idx}&rs_idx=${review.rs_idx }&page=${page }&revPage=${revPage }">${review.rev_title }</a>
+								</th><!-- 제목 -->
+								<th>
+									<!-- 별점 -->
+									<h7>
+										<c:forEach begin="1" end="${review.rev_score }" step="1">★</c:forEach>
+									</h7>
+								</th>
+								<th class="text-center d-none d-md-table-cell">${review.rev_id }</th><!-- 리뷰어 -->
+								<th class="text-center w-25 h6">${review.rev_regdate }</th><!-- 작성일 -->
+								<th class="text-right">
+								<!-- 수정 삭제 -->
+								<c:if test="${review.rev_id.equals(sid) || sid.equals('admin') }">
+									<a href="${root }/review/updateReview?rev_idx=${review.rev_idx }&page=${page}&revPage=${revPageBean.currentP}" class="btn btn-outline-danger" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">수정</a>
+									<a href="${root }/review/deleteReview?rev_idx=${review.rev_idx }&rs_idx=${review.rs_idx }&page=${page}&revPage=${revPageBean.currentP}" class="btn btn-outline-danger" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">삭제</a>
 								</c:if>
-							</th>
+								</th>
 							</tr>
-							<c:if test="${!status.last }">
-							</c:if>
 							</c:forEach>
-							</tr>
-						  </tbody>						
-						</table>
-						<!-- 리뷰 작성하기 -->
-						<div class="text-right">
-							<a href="/review/insertReview?rs_idx=${rs_idx }&page=${page}" class="btn btn-secondary">리뷰 작성하기</a>
-						</div>
+						</tbody>						
+					</table>
+					<!-- 리뷰 작성하기 -->
+					<div class="text-right">
+						<a href="/review/insertReview?rs_idx=${rs_idx }&page=${page}" class="btn btn-secondary">리뷰 작성하기</a>
 					</div>
+				</div>
 					<div class="d-none d-md-block">
 						<ul class="pagination justify-content-center">
 						<c:choose>
@@ -206,11 +202,11 @@
 	}
 </script>
 <!-- Footer-->
-<c:import url="/WEB-INF/views/include/bottom_menu.jsp"></c:import>	
+<c:import url="${root }/WEB-INF/views/include/bottom_menu.jsp"></c:import>	
 <!-- Bootstrap core JS-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Core theme JS-->
-<script src="./resources/js/scripts.js"></script>
+<script src="${root }/resources/js/scripts.js"></script>
 
 </body>
 </html>

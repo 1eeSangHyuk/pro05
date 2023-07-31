@@ -88,9 +88,11 @@
 			<mapping path="/review/**"/>
 			<mapping path="/qna/**"/>
 			<exclude-mapping path="/restaurant/main"/>
+			<exclude-mapping path="/restaurant/detail"/>
 			<exclude-mapping path="/restaurant/restaurantCate"/>
 			<exclude-mapping path="/restaurant/restaurantRegion"/>
 			<exclude-mapping path="/restaurant/restaurantFood"/>
+			<exclude-mapping path="/review/detail"/>
 			<exclude-mapping path="/qna/main"/>
 			<exclude-mapping path="/qna/detail"/>
 			<beans:bean class="com.matjip.interceptor.UserInterceptor" />

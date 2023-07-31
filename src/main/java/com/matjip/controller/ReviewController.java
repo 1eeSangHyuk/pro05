@@ -51,11 +51,17 @@ public class ReviewController {
 	
 	@GetMapping("/detail")
 	public String reviewDetail(@RequestParam int rev_idx,
-			@RequestParam int myPage,
+			@RequestParam(defaultValue = "0") int myPage,
+			@RequestParam(defaultValue = "0") int rs_idx,
+			@RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "0") int revPage,
 			Model model) {
 		ReviewBean reviewBean = reviewService.reviewByRevIdx(rev_idx);
 		model.addAttribute("reviewBean", reviewBean);
 		model.addAttribute("myPage", myPage);
+		model.addAttribute("rs_idx", rs_idx);
+		model.addAttribute("page", page);
+		model.addAttribute("revPage", revPage);
 		return "review/template";
 	}
 
@@ -138,6 +144,7 @@ public class ReviewController {
 			model.addAttribute("rev_idx", reviewBean.getRev_idx());
 			return "review/update_success2";
 		} else {
+			model.addAttribute("rev_idx", reviewBean.getRev_idx());
 			model.addAttribute("rs_idx", reviewBean.getRs_idx());
 			return "review/update_success";
 		}

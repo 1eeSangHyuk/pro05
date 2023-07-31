@@ -15,7 +15,21 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 	<style>
-	#noPage {display:none;}
+		#noPage {display:none;}
+		
+		.container-wrap {
+			margin-top: 120px;
+			position: relative;
+			min-height: 100%;
+		    padding-bottom: 250px;
+			bottom:0px;
+		}
+		
+		.shadow {
+			width: 1000px;
+			display: flex;
+			margin: 0 auto;
+		}
 	</style>
 </head>
 <body>
@@ -23,8 +37,7 @@
 	
 	<div class="container" style="margin-top:100px">
 		<div class="row">
-			<div class="col-sm-3"></div>
-			<div class="col-sm-6">
+			<div class="col-sm-12">
 				<div class="card shadow">
 					<div class="card-body">
 						<div class="form-group">
@@ -70,7 +83,7 @@
 	<!-- Bootstrap core JS-->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 	<!-- Core theme JS-->
-	<script src="./resources/js/scripts.js"></script>
+	<script src="${root }/resources/js/scripts.js"></script>
 	
 </body>
 </html>

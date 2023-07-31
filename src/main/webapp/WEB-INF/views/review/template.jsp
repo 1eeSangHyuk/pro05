@@ -26,7 +26,21 @@
     	<link href="${pageContext.request.contextPath}/resources/css/carousel.css" rel="stylesheet">
         <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/color-modes.js"></script>
-	
+	<style>
+		.container-wrap {
+			margin-top: 120px;
+			position: relative;
+			min-height: 100%;
+		    padding-bottom: 250px;
+			bottom:0px;
+		}
+		
+		.shadow {
+			width: 1000px;
+			display: flex;
+			margin: 0 auto;
+		}
+	</style>
 </head>
 <body>
 
@@ -34,12 +48,11 @@
 	
 	<div class="container" style="margin-top:100px">
 		<div class="row">
-			<div class="col-sm-3"></div>
-			<div class="col-sm-6">
+			<div class="col-sm-12">
 				<div class="card shadow">
 					<div class="card-body">
 						<div class="form-group">
-						<h3 class="text-center card-title"><strong>내가 작성한 리뷰 상세보기</strong></h3>
+						<h3 class="text-center card-title"><strong>리뷰 상세보기</strong></h3>
 							<label for="rs_name">가게명</label>
 							<input type="text" id="rs_name" name="rs_name" class="form-control" value="${reviewBean.rs_name }" disabled="disabled"/>
 						</div>
@@ -75,15 +88,25 @@
 						</c:if>	
 						<div class="form-group">
 							<div class="text-right">
-								<a href="${root}/review/main?myPage=${myPage}" class="btn btn-secondary">내 리뷰 목록 보기</a>
-								<a href="${root}/review/updateReview?rev_idx=${reviewBean.rev_idx}&myPage=${myPage}" class="btn btn-warning">수정하기</a>
-								<a href="${root}/review/deleteReview?rev_idx=${reviewBean.rev_idx}&myPage=${myPage}" class="btn btn-danger">삭제하기</a>
+								<c:if test="${myPage != 0 }">
+									<a href="${root}/review/main?myPage=${myPage }" class="btn btn-secondary">내 리뷰 목록 보기</a>
+									<c:if test="${reviewBean.rev_id.equals(sid) || sid.equals('admin') }">
+										<a href="${root}/review/updateReview?rev_idx=${reviewBean.rev_idx}&myPage=${myPage}" class="btn btn-warning">수정하기</a>
+										<a href="${root}/review/deleteReview?rev_idx=${reviewBean.rev_idx}&myPage=${myPage}" class="btn btn-danger">삭제하기</a>
+									</c:if>
+								</c:if>
+								<c:if test="${myPage == 0 }">
+									<a href="${root }/restaurant/detail?rs_idx=${rs_idx }&page=${page }&revPage=${revPage }" class="btn btn-secondary">맛집 상세보기로 가기</a>
+									<c:if test="${reviewBean.rev_id.equals(sid) || sid.equals('admin') }">
+										<a href="${root }/review/updateReview?rev_idx=${reviewBean.rev_idx }&page=${page }&revPage=${revPage }" class="btn btn-warning">수정하기</a>
+										<a href="${root }/review/deleteReview?rev_idx=${reviewBean.rev_idx }&rs_idx=${reviewBean.rs_idx }&page=${page}&revPage=${revPage }" class="btn btn-danger">삭제하기</a>
+									</c:if>
+								</c:if>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-3"></div>
 		</div>
 	</div>
 	<script>
@@ -92,11 +115,11 @@
 		}
 	</script>
 
-	<c:import url="/WEB-INF/views/include/bottom_menu.jsp" />
+	<c:import url="${root }/WEB-INF/views/include/bottom_menu.jsp" />
 	<!-- Bootstrap core JS-->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 	<!-- Core theme JS-->
-	<script src="./resources/js/scripts.js"></script>
+	<script src="${root }/resources/js/scripts.js"></script>
 
 </body>
 </html>

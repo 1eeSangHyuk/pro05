@@ -29,8 +29,10 @@
 			<div class="card shadow">
 				<div class="card-body">
 					<form:form action="${root}/qna/modify_procedure" method="post" modelAttribute="modifyQnaBean" >
+					<input type="hidden" id="lev1_qna_idx" name="lev1_qna_idx" value="${lev1_qna_idx }">
 					<form:hidden path="qna_idx" />
 					<input type="hidden" name="page" value="${page}" />
+					<form:hidden path="lev" />
 						<div class="form-group">
 							<form:label path="qna_id">작성자</form:label>
 							<form:input path="qna_id" class="form-control" readonly="true" />
@@ -52,7 +54,8 @@
 						<div class="form-group">
 							<div class="text-right">
 								<form:button class="btn btn-primary">수정완료</form:button>
-								<a href="${root}/qna/detail?qna_idx=${qna_idx}&page=${page}" class="btn btn-info">취소</a>
+								<form:button type="reset" class="btn btn-info">리셋</form:button>
+								<form:button><a href="javascript:history.go(-1)" class="btn btn-danger">뒤로가기</a></form:button>
 							</div>
 						</div>
 					</form:form>

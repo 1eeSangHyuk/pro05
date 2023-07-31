@@ -163,10 +163,12 @@ public class QnaController {
 	@GetMapping("/modify")
 	public String QnaModify(@RequestParam("qna_idx") int qna_idx,
 	  						@RequestParam("page") int page,
+	  						@RequestParam int lev1_qna_idx,
 	  						@ModelAttribute("modifyQnaBean") QnaBean modifyQnaBean,
 	  						Model model){
 			
 		model.addAttribute("qna_idx", qna_idx);
+		model.addAttribute("lev1_qna_idx", lev1_qna_idx);
 		model.addAttribute("page", page);
 		
 		// 수정페이지에 출력할 데이터 가져오기
@@ -188,22 +190,36 @@ public class QnaController {
 	}  	  
 	
 	@PostMapping("/modify_procedure")
-	public String modifyProcedure(@Valid @ModelAttribute("modifyNoticeBean") QnaBean modifyQnaBean,
+	public String modifyProcedure(@Valid @ModelAttribute("modifyQnaBean") QnaBean modifyQnaBean,
 								  BindingResult result,  Model model,
 								  @RequestParam("page") int page,
+								  @RequestParam int lev1_qna_idx,
 								  @RequestParam("qna_idx") int qna_idx) {
 		
-		model.addAttribute("qna_idx", qna_idx);
 		model.addAttribute("page", page);
 		if(result.hasErrors()){
 			System.out.println("에러O");
 			System.out.println(result.getAllErrors());
-			
+			QnaBean tmpQnaBean = qnaService.getQnaDetail(qna_idx);
+			modifyQnaBean.setQna_title(tmpQnaBean.getQna_title());
+			modifyQnaBean.setQna_content(tmpQnaBean.getQna_content());
+			modifyQnaBean.setQna_id(tmpQnaBean.getQna_id());
+			modifyQnaBean.setLev(tmpQnaBean.getLev());
+			modifyQnaBean.setParno(tmpQnaBean.getParno());
+			modifyQnaBean.setQna_resdate(tmpQnaBean.getQna_resdate());
+			model.addAttribute("lev1_qna_idx", lev1_qna_idx);
+			modifyQnaBean.setQna_idx(qna_idx);
+			// model.addAttribute("modifyQnaBean", modifyQnaBean);
 			return "qna/modify";
 		}
 		qnaService.modifyQna(modifyQnaBean);
-			System.out.println("에러X");		
-			return "qna/modify_success";
+		//System.out.println(modifyQnaBean.getLev());
+		if(modifyQnaBean.getLev() > 1) {
+			model.addAttribute("qna_idx", lev1_qna_idx);
+		} else {
+			model.addAttribute("qna_idx", qna_idx);
+		}
+		return "qna/modify_success";		
 	}
 	
   //질문 삭제

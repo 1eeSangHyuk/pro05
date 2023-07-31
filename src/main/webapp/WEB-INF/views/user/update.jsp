@@ -6,64 +6,66 @@
 <c:set var="root" value="${pageContext.request.contextPath }/" />
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>Jeju Matzip_modification user info</title>
-        <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="${root }resources/assets/favicon.ico" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="${root }resources/css/styles.css" rel="stylesheet" />
-        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-    </head>
-    <script>
-      function resetUserIdExist(){	  
-    	  $("#userIdExist").val("1");
-    	  $("#idck").val("no");
-      } // resetUserIdExist
-      
-      function joinCheck(f){
+	<head>
+	    <meta charset="utf-8" />
+	    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	    <meta name="description" content="" />
+	    <meta name="author" content="" />
+	    <title>Jeju Matzip_modification user info</title>
+	    <!-- Favicon-->
+	    <link rel="icon" type="image/x-icon" href="${root }resources/assets/favicon.ico" />
+	    <!-- Core theme CSS (includes Bootstrap)-->
+	    <link href="${root }resources/css/styles.css" rel="stylesheet" />
+	    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	</head>
+	<script>
+		function resetUserIdExist(){	  
+			$("#userIdExist").val("1");
+			$("#idck").val("no");
+		} // resetUserIdExist
+     
+    function joinCheck(f){
+			console.log(f);
+			console.log(f.user_name.value);
 			if(f.user_pw.value!=f.user_pw2.value){
 				alert("변경한 비밀번호와 비밀번호 확인이 서로 다릅니다.");
 				f.user_pw.focus();
 				return false;
-			}
+				}
+			
+	    const regExpS = new RegExp('/[!?@#$%^&*():;+-=~{}<>\_\[\]\|\\\"\'\,\.\/\`\₩]/g');
+	    const regExpK = new RegExp('/[ㄱ-ㅎㅏ-ㅣ가-힣]/g;');
+	    const regExpN = new RegExp('/[0-9]/g');
+	    const regExpE = new RegExp('/[a-zA-Z]/g');
+	    
+	    console.log(regExpK.test(f.user_name.value));
+	    //   이름 제약 조건
+	    /* if(regExpK.test(f.user_name.value) && f.user_name.value.length > 2){
+	       return true;
+	    } else {
+	       alert("이름은 한글 2자 이상 입력하세요.")
+	       f.user_name.focus();
+	       return false;
+	    } */
+	    if(regExpS.test(f.user_name.value)){
+	       alert("이름에는 특수문자가 포함될 수 없습니다.")
+	       f.user_name.focus();
+	       return false;
+	    } else {
+	       return true;
+	    }
 		}
-      const regExpS = /[!?@#$%^&*():;+-=~{}<>\_\[\]\|\\\"\'\,\.\/\`\₩]/g;
-      const regExpK = /[ㄱ-ㅎㅏ-ㅣ가-힣]/g;
-      const regExpN = /[0-9]/g;
-      const regExpE = /[a-zA-Z]/g;
-      
-      //   이름 제약 조건
-      if(regExpK.test(f.user_name) && f.user_name.length === 2){
-         return true;
-      } else {
-         alert("이름은 한글 2자 이상 입력하세요.")
-         f.user_name.focus()
-         return false;
-      }
-      if(regExpS.test(f.user_name)){
-         alert("이름에는 특수문자가 포함될 수 없습니다.")
-         f.user_name.focus()
-         return false;
-      } else {
-         return true;
-      }
-      
-   }
-   function yesOrNo(){
-      if(confirm("회원 탈퇴 시 작성한 모든 게시물이 삭제됩니다. 계속 진행하시겠습니까 ?")){
-         location.href="${root }user/delete?user_id=${loggedUserInfo.user_id }";
-         return true;
-      } else {
-         alert("회원 탈퇴가 취소 되었습니다.")
-         return false;
-      }
-   }
-</script>
-    <body>
+	  function yesOrNo(){
+	     if(confirm("회원 탈퇴 시 작성한 모든 게시물이 삭제됩니다. 계속 진행하시겠습니까 ?")){
+	        location.href="${root }user/delete?user_id=${loggedUserInfo.user_id }";
+	        return true;
+	     } else {
+	        alert("회원 탈퇴가 취소 되었습니다.")
+	        return false;
+	     }
+	  }
+	</script>
+<body>
         <!-- TOP MENU - Responsive navbar-->
         <c:import url="/WEB-INF/views/include/top_menu.jsp" />
         <!-- Page Content-->

@@ -171,6 +171,8 @@ public class RestController {
 		
 		PageBean revPageBean = reviewService.getReviewCntByResId(rs_idx, revPage);
 		model.addAttribute("revPageBean", revPageBean);
+		
+		model.addAttribute("revPage", revPage);
 
 		return "restaurant/detail";
 	}
@@ -214,10 +216,8 @@ public class RestController {
 		model.addAttribute("modifyRestBean", modifyRestBean);
 
 		List<FoodBean> foodList = restService.getFoodTable();
-		System.out.println(foodList);
 		model.addAttribute("foodList", foodList);
 		List<RegionBean> regionList = restService.getRegionTable();
-		System.out.println(regionList);
 		model.addAttribute("regionList", regionList);
 
 		return "restaurant/modify";
@@ -231,6 +231,11 @@ public class RestController {
 		if (result.hasErrors()) {
 			System.out.println("에러O");
 			System.out.println(result.getAllErrors());
+			
+			List<FoodBean> foodList = restService.getFoodTable();
+			model.addAttribute("foodList", foodList);
+			List<RegionBean> regionList = restService.getRegionTable();
+			model.addAttribute("regionList", regionList);
 
 			return "restaurant/modify";
 		}

@@ -46,10 +46,12 @@
 					<div class="form-group">
 						<form:label path="rs_name">이름</form:label>
 						<form:input path="rs_name" class="form-control" />
+						<form:errors path="rs_name" style="color:red;" /><br>
 					</div>
 					<div class="form-group">
 						<form:label path="rs_content">내용</form:label>
 						<form:textarea path="rs_content" class="form-control" rows="10" style="resize:none" />
+						<form:errors path="rs_content" style="color:red;" /><br>
 					</div>
 					<div class="form-group">
 						<form:label path="rs_phone">전화번호</form:label>

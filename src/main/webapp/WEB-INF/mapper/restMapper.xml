@@ -116,6 +116,20 @@
 		]]>		
 	</select>
 	
+	<!-- region table 불러오기 -->
+	<select id="getRegionTable" resultType="com.matjip.bean.RegionBean">
+		<![CDATA[
+			select * from region order by region_cate
+		]]>
+	</select>
+	
+	<!-- food table 불러오기 -->
+	<select id="getFoodTable" resultType="com.matjip.bean.FoodBean">
+		<![CDATA[
+			select * from food order by food_cate
+		]]>
+	</select>
+	
 	<select id="getRestTop3" resultType="com.matjip.bean.RestBean">
 	<![CDATA[
 		select * from(select r.rs_idx, rs.rs_name, rs.rs_content, rs.rs_addr, rs.rs_file,  

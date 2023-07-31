@@ -19,7 +19,7 @@ public class MainInterceptor implements HandlerInterceptor{
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {		
-		ArrayList<List<RestBean>> restBeanList2 = mainService.getRecentRestList();
+		List<List<RestBean>> restBeanList2 = mainService.getRecentRestList();
 		request.setAttribute("restBeanList2", restBeanList2);
 		return true;
 	}

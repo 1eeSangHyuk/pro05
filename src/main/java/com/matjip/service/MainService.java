@@ -31,8 +31,8 @@ public class MainService {
 	}
 	
 	/* 음식분류, 지역분류를 통한 음식점 리스트 불러오기 */
-	public ArrayList<List<RestBean>> getRecentRestList(){
-		ArrayList<List<RestBean>> restBeanList2 = new ArrayList<List<RestBean>>();
+	public List<List<RestBean>> getRecentRestList(){
+		List<List<RestBean>> restBeanList2 = new ArrayList<List<RestBean>>();
 		List<String> foodCateList = mainDAO.getFoodCate();
 		List<String> regionCateList = mainDAO.getRegionCate();
 		for(String rs_food_cate : foodCateList) {

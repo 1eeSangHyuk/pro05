@@ -27,6 +27,21 @@
         <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/color-modes.js"></script>
 	
+	<style>
+		.container-wrap {
+			margin-top: 120px;
+			position: relative;
+			min-height: 100%;
+		    padding-bottom: 250px;
+			bottom:0px;
+		}
+		
+		.shadow {
+			width: 1000px;
+			display: flex;
+			margin: 0 auto;
+		}
+	</style>
 </head>
 <body>
 
@@ -36,8 +51,7 @@
 <!-- 맛집 리스트 글쓰기 -->
 	<div class="container" style="margin-top: 100px">
 		<div class="row">
-			<div class="col-sm-3"></div>
-			<div class="col-sm-6">
+			<div class="col-sm-12">
 				<div class="card shadow">
 					<div class="card-body">
 						<h3 class="text-center card-title">
@@ -75,49 +89,64 @@
 					</div>
 				</div>
 			</div>
-			<div class="card mb-2">
-				<div class="card-header bg-light">
-					<i class="fa fa-comment fa"></i> REPLY
-				</div>
-				<div class="card-body">
-					<form:form action="${root }qna/qnaReply_procedure" method="post"
-						modelAttribute="replyQnaBean">
-						<form:input type="hidden" path="qna_title"/>
-						<input type="hidden" id="page" name="page" value="${page }" />
-						<input type="hidden" id="parno" name="parno" value="${qna_idx }" />
-						<input type="hidden" id="numb1" name="numb1" value="${qna_idx }" />
-						<input type="hidden" id="qna_idx" name="qna_idx"
-							value="${qna_idx }" />
-						<input type="hidden" id="qna_id" name="qna_id" value="${sid }" />
-						<form:textarea path="qna_content" class="form-control" rows="10"
-							style="resize:none" />
-						<form:errors path="qna_content" style="color:red;" /><br>
-						<form:button>댓글등록</form:button>
-					</form:form>
+			<div class="col-sm-12" style="margin-top: 20px;">
+				<div class="card shadow">
+					<div class="card mb-2">
+						<div class="card-body">
+							<h4 style="text-align: center;">답글달기</h4>
+						</div>
+						<div class="card-body">
+							<form:form action="${root }qna/qnaReply_procedure" method="post"
+								modelAttribute="replyQnaBean">
+								<form:input type="hidden" path="qna_title"/>
+								<input type="hidden" id="page" name="page" value="${page }" />
+								<input type="hidden" id="parno" name="parno" value="${qna_idx }" />
+								<input type="hidden" id="numb1" name="numb1" value="${qna_idx }" />
+								<input type="hidden" id="qna_idx" name="qna_idx"
+									value="${qna_idx }" />
+								<input type="hidden" id="qna_id" name="qna_id" value="${sid }" />
+								<form:textarea path="qna_content" class="form-control" rows="10"
+									style="resize:none" />
+								<form:errors path="qna_content" style="color:red;" /><br>
+								<form:button>댓글등록</form:button>
+							</form:form>
+						</div>
+					</div>
 				</div>
 			</div>
-			<div class="card shadow">
-				<div class="card-body">
-					<h3 style="text-align: center;">REPLY</h3>
+			<div class="col-sm-12" style="margin-top: 20px;">
+				<div class="card shadow">
+					<div class="card-body">
+						<h3 style="text-align: center;">REPLY</h3>
+					</div>
+					<table class="table table-hover" id='답변을 달아줘'>
+						<thead>
+							<tr>
+								<th class="text-center d-none d-md-table-cell">내용</th>
+								<th class="text-center d-none d-md-table-cell">작성자</th>
+								<th class="text-center d-none d-md-table-cell">작성일</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach var="replyQnaBean" items="${qnaReplyList }">
+								<c:if test="${replyQnaBean.parno==qnaDetailBean.qna_idx}">
+									<tr>
+										<td class="text-center d-none d-md-table-cell">${replyQnaBean.qna_content }</td>
+										<td class="text-center d-none d-md-table-cell">${replyQnaBean.qna_id }</td>
+										<td class="text-center d-none d-md-table-cell">${replyQnaBean.qna_resdate }</td>
+										<td>
+										<c:if test="${replyQnaBean.qna_id.equals(sid) }">
+		                  <a href="/qna/modify?qna_idx=${replyQnaBean.qna_idx}&qna_id=${replyQnaBean.qna_id }&page=${page}&lev1_qna_idx=${qna_idx }" class="btn btn-outline-danger" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">수정</a>
+		                  <a href="/qna/deleteReply?qna_idx=${replyQnaBean.qna_idx}&qna_id=${replyQnaBean.qna_id }&page=${page}" class="btn btn-outline-danger" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">삭제</a>
+		                </c:if>
+		                </td>
+									</tr>
+								</c:if>
+							</c:forEach>
+						</tbody>
+					</table>
 				</div>
-				<table class="table table-hover" id='답변을 달아줘'>
-					<thead>
-						<th class="text-center d-none d-md-table-cell">내용</th>
-						<th class="text-center d-none d-md-table-cell">작성자</th>
-						<th class="text-center d-none d-md-table-cell">작성일</th>
-					</thead>
-					<tbody>
-						<c:forEach var="replyQnaBean" items="${qnaReplyList }">
-							<c:if test="${replyQnaBean.parno==qnaDetailBean.qna_idx}">
-								<tr>
-									<th class="text-center d-none d-md-table-cell">${replyQnaBean.qna_content }</th>
-									<th class="text-center d-none d-md-table-cell">${replyQnaBean.qna_id }</th>
-									<th class="text-center d-none d-md-table-cell">${replyQnaBean.qna_resdate }</th>
-								</tr>
-							</c:if>
-						</c:forEach>
-					</tbody>
-				</table>
 			</div>
 		</div>
 	</div>
