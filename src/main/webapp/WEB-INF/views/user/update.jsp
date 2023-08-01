@@ -24,37 +24,41 @@
 			$("#idck").val("no");
 		} // resetUserIdExist
      
-    function joinCheck(f){
-			console.log(f);
-			console.log(f.user_name.value);
-			if(f.user_pw.value!=f.user_pw2.value){
-				alert("변경한 비밀번호와 비밀번호 확인이 서로 다릅니다.");
-				f.user_pw.focus();
-				return false;
-				}
-			
-	    const regExpS = new RegExp('/[!?@#$%^&*():;+-=~{}<>\_\[\]\|\\\"\'\,\.\/\`\₩]/g');
-	    const regExpK = new RegExp('/[ㄱ-ㅎㅏ-ㅣ가-힣]/g;');
-	    const regExpN = new RegExp('/[0-9]/g');
-	    const regExpE = new RegExp('/[a-zA-Z]/g');
-	    
-	    console.log(regExpK.test(f.user_name.value));
-	    //   이름 제약 조건
-	    /* if(regExpK.test(f.user_name.value) && f.user_name.value.length > 2){
-	       return true;
-	    } else {
-	       alert("이름은 한글 2자 이상 입력하세요.")
-	       f.user_name.focus();
-	       return false;
-	    } */
-	    if(regExpS.test(f.user_name.value)){
-	       alert("이름에는 특수문자가 포함될 수 없습니다.")
-	       f.user_name.focus();
-	       return false;
-	    } else {
-	       return true;
-	    }
-		}
+		function joinCheck(f){
+      if(f.user_pw.value!=f.user_pw2.value){
+         alert("변경한 비밀번호와 비밀번호 확인이 서로 다릅니다.");
+         f.user_pw.focus();
+         return false;
+      }
+      if(!f.user_pw.value || !f.user_pw2.value){
+         alert("비밀번호를 확인하세요.");
+         f.user_pw.focus();
+         return false;
+      }
+      if(f.user_name.value.length < 2){
+         alert("이름은 최소 2글자 이상 입력하세요.");
+         f.user_name.focus();
+         return false;
+      } else if(f.user_name.value.length > 6){
+         alert("이름은 최대 6글자까지 입력 가능합니다.");
+         f.user_name.focus();
+         return false;
+      }
+      if(f.user_phone.value.length < 9){
+         alert("연락처는 최소 10자리 이상 입력하세요.");
+         f.user_phone.focus();
+         return false;
+      }
+      if(f.user_email.value.indexOf("@") == -1){
+         alert("이메일 주소를 확인하세요.");
+         f.user_email.focus();
+         return false;
+      } else if(f.user_email.value.indexOf(".") == -1){
+         alert("이메일 주소를 확인하세요.");
+         f.user_email.focus();
+         return false;
+      }
+   	}
 	  function yesOrNo(){
 	     if(confirm("회원 탈퇴 시 작성한 모든 게시물이 삭제됩니다. 계속 진행하시겠습니까 ?")){
 	        location.href="${root }user/delete?user_id=${loggedUserInfo.user_id }";

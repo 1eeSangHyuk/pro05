@@ -61,27 +61,45 @@
     				$("#user_id").focus();
     			}
     		}			
-    	})
+    	});
     	
-      } // checkUserIdExist
+    } // checkUserIdExist
       
-     
-      function resetUserIdExist(){	  
-    	  $("#userIdExist").val("1");
-    	  $("#idck").val("no");
-      } // resetUserIdExist
-      
-      function joinCheck(f){
-			if(f.user_pw.value!=f.user_pw2.value){
-				alert("비밀번호와 비밀번호 확인이 서로 다릅니다.");
-				f.user_pw.focus();
-				return false;
-			}
-			if(f.idck.value!="yes"){
-				alert("아이디 중복 체크를 하지 않으셨습니다.");
-				return false;
-			}
-		}
+    function joinCheck(f){
+      if(f.user_pw.value!=f.user_pw2.value){
+         alert("비밀번호와 비밀번호 확인이 서로 다릅니다.");
+         f.user_pw.focus();
+         return false;
+      }
+      if(f.idck.value!="yes"){
+         alert("아이디 중복 체크를 하지 않으셨습니다.");
+         return false;
+      }
+      if(f.user_name.value.length < 2){
+         alert("이름은 최소 2글자 이상 입력하세요.");
+         f.user_name.focus();
+         return false;
+      } else if(f.user_name.value.length > 6){
+         alert("이름은 최대 6글자까지 입력 가능합니다.");
+         f.user_name.focus();
+         return false;
+      }
+      if(f.user_phone.value.length < 9){
+         alert("연락처는 최소 10자리 이상 입력하세요.");
+         f.user_phone.focus();
+         return false;
+      }
+      if(f.user_email.value.indexOf("@") == -1){
+         alert("이메일 주소를 확인하세요.");
+         f.user_email.focus();
+         return false;
+      } else if(f.user_email.value.indexOf(".") == -1){
+         alert("이메일 주소를 확인하세요.");
+         f.user_email.focus();
+         return false;
+      }
+   	}
+
   
 </script>
     <body>
